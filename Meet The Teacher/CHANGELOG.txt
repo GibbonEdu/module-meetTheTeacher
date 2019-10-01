@@ -1,5 +1,9 @@
 CHANGELOG
 =========
+1.1.06
+------
+Added the ability to manage parent login codes
+
 1.1.05
 ------
 Refactored Breadcrumbs for version >= v17
