@@ -52,7 +52,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Meet The Teacher/loginCode
 
     $row = $form->addRow();
         $row->addLabel('gibbonPersonID', __('Parent'));
-        $row->addSelectUsers('gibbonPersonID');
+        $row->addSelectUsers('gibbonPersonID')->placeholder()->required();
 
     $row = $form->addRow();
         $row->addLabel('loginCode', __m('Parent Login Code'))->description(__('Generated in the Meet The Teacher system.'));
