@@ -67,6 +67,22 @@ $actionRows[1]['categoryPermissionStudent'] = 'N';
 $actionRows[1]['categoryPermissionParent'] = 'N';
 $actionRows[1]['categoryPermissionOther'] = 'N';
 
+$actionRows[2]['name'] = 'Manage Login Codes';
+$actionRows[2]['precedence'] = '0';
+$actionRows[2]['category'] = 'Admin';
+$actionRows[2]['description'] = 'Allows a user to manage Meet The Teacher parent login codes.';
+$actionRows[2]['URLList'] = 'loginCodes_manage.php,loginCodes_manage_add.php,loginCodes_manage_edit.php,loginCodes_manage_delete.php';
+$actionRows[2]['entryURL'] = 'loginCodes_manage.php';
+$actionRows[2]['defaultPermissionAdmin'] = 'Y';
+$actionRows[2]['defaultPermissionTeacher'] = 'N';
+$actionRows[2]['defaultPermissionStudent'] = 'N';
+$actionRows[2]['defaultPermissionParent'] = 'N';
+$actionRows[2]['defaultPermissionSupport'] = 'N';
+$actionRows[2]['categoryPermissionStaff'] = 'Y';
+$actionRows[2]['categoryPermissionStudent'] = 'N';
+$actionRows[2]['categoryPermissionParent'] = 'N';
+$actionRows[2]['categoryPermissionOther'] = 'N';
+
 //Settings
 $gibbonSetting[0] = "INSERT INTO `gibbonSetting` (`gibbonSettingID` ,`scope` ,`name` ,`nameDisplay` ,`description` ,`value`) VALUES (NULL , 'Meet The Teacher', 'yearGroups', 'Year Groups', 'List of year group short names to match against, as a comma-separated list.', 'Y07,Y08,Y09,Y10,Y11,Y12,Y13');";
 $gibbonSetting[1] = "INSERT INTO `gibbonSetting` (`gibbonSettingID` ,`scope` ,`name` ,`nameDisplay` ,`description` ,`value`) VALUES (NULL , 'Meet The Teacher', 'text', 'Text', 'Introductory text used at the top of the dashboard entry', 'Login to Meet The Teacher, using the link below, to make consultation bookings:');";
