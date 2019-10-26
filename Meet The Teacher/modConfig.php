@@ -61,5 +61,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	include $PESMOD_DIR . '/controllers/ContactLinkController.php';
 	include $PESMOD_DIR . '/controllers/RollGroupController.php';
 	include $PESMOD_DIR . '/controllers/ClassController.php';
+	include $PESMOD_DIR . '/controllers/HeadOfYearController.php';
 
 ?>

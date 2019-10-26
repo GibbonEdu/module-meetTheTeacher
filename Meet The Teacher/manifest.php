@@ -26,7 +26,7 @@ $entryURL = 'meetTheTeacher_view.php';
 $type = 'Additional';
 $category = 'Other';
 $version = '1.1.04';
-$author = 'Jim Speirs, Sandra Kuipers & Ross Parker';
+$author = 'Jim Speir, Sandra Kuipers & Ross Parker';
 $url = 'http://gibbonedu.org';
 
 //Module tables

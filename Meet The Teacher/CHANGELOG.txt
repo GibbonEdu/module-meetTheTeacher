@@ -1,5 +1,9 @@
 CHANGELOG
 =========
+1.1.05
+------
+Updated to include Heads of Years
+
 1.1.04
 ------
 Fixed a file include error in the Parent dashboard

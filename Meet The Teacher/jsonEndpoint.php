@@ -71,18 +71,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 						"ActivityGroupLinks" => new ActivityGroupController($connection2),
 						"ContactLinks" => New ContactLinkController($connection2),
 						"RollGroupLinks" => new RollGroupController($connection2),
-						"ClassLinks" => new ClassController($connection2)
+						"ClassLinks" => new ClassController($connection2),
+						"HOYLinks" => new HeadOfYearController($connection2)
 					);
 	
 					$response = array();
 					try
 					{
-            $response['Info'] = array(
-              "APIVersion" => getSettingByScope($connection2, 'Meet The Teacher', 'version',true)['value'],
-              "IgnoreClasses" => getSettingByScope($connection2, 'Meet The Teacher', 'lsIgnoreClasses',true)['value'],
-              "LSRole" => getSettingByScope($connection2, 'Meet The Teacher', 'lsTeacherRole', true)['value'],
-              "GibbonVersion" => $version
-            );
+						$response['Info'] = array(
+						"APIVersion" => getSettingByScope($connection2, 'Meet The Teacher', 'version',true)['value'],
+						"IgnoreClasses" => getSettingByScope($connection2, 'Meet The Teacher', 'lsIgnoreClasses',true)['value'],
+						"LSRole" => getSettingByScope($connection2, 'Meet The Teacher', 'lsTeacherRole', true)['value'],
+						"GibbonVersion" => $version
+						);
 						foreach($controllers as $controllerNode => $controller)
 						{
 							$response[$controllerNode] = $controller->GetAll();
