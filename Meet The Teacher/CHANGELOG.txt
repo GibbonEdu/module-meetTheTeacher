@@ -1,5 +1,9 @@
 CHANGELOG
-=========
+
+1.1.07
+------
+Updated to include Heads of Years
+
 1.1.06
 ------
 Added the ability to manage parent login codes
@@ -8,6 +12,7 @@ Added the ability to manage parent login codes
 ------
 Refactored Breadcrumbs for version >= v17
 Set value for input 'apiVersion' in Manage Settings
+>>>>>>> 9683168b913ee60e9c2c02bae6f2064a5c9e62d9
 
 1.1.04
 ------

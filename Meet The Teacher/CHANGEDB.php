@@ -80,3 +80,8 @@ $sql[$count][1] = "
 INSERT INTO `gibbonAction` (`gibbonModuleID`, `name`, `precedence`, `category`, `description`, `URLList`, `entryURL`, `defaultPermissionAdmin`, `defaultPermissionTeacher`, `defaultPermissionStudent`, `defaultPermissionParent`, `defaultPermissionSupport`, `categoryPermissionStaff`, `categoryPermissionStudent`, `categoryPermissionParent`, `categoryPermissionOther`) VALUES ((SELECT gibbonModuleID FROM gibbonModule WHERE name='Meet The Teacher'), 'Manage Login Codes', 0, 'Admin', 'Allows a user to manage Meet The Teacher parent login codes.', 'loginCodes_manage.php,loginCodes_manage_add.php,loginCodes_manage_edit.php,loginCodes_manage_delete.php', 'loginCodes_manage.php', 'Y', 'N', 'N', 'N', 'N', 'Y', 'N', 'N', 'N');end
 INSERT INTO `gibbonPermission` (`gibbonRoleID` ,`gibbonActionID`) VALUES ('001', (SELECT gibbonActionID FROM gibbonAction JOIN gibbonModule ON (gibbonAction.gibbonModuleID=gibbonModule.gibbonModuleID) WHERE gibbonModule.name='Meet The Teacher' AND gibbonAction.name='Manage Login Codes'));end
 ";
+
+//v1.1.07
+++$count;
+$sql[$count][0] = '1.1.07';
+$sql[$count][1] = "";
