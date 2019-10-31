@@ -40,6 +40,7 @@ ContactLinks			| A list of links between parents and students. The priority and 
 RollGroupLinks			| A list of roll group links for registration tutors.
 ClassLinks				| A list of academic class links for timetabled classes.
 IndividualNeedsGroups	| **Only available in Gibbon v15 and up.** A list of links between learning support teachers and children with additional needs. Read the Individual Needs section for more info.
+HeadOfYearController    | **Only available in Gibbon v16 and up.** A list of heads of year, and students in year groups
 
 ### Individual Needs ###
 There's a few options available for the individual needs section on the system simply because there's a few custom requests of that page. Individual needs can be
@@ -50,8 +51,8 @@ I'm using 4 space tabulation in VIM. I'd prefer this is uniform to help make the
 
 ### Contributors ###
 Jim Speir - School Cloud Systems
-Sandra Kuipers - Gibbon Developer
-Ross Parker - Gibbon Developer
+Sandra Kuipers - Gibbon Maintainer
+Ross Parker - Gibbon Founder
 
 ### Support ###
 

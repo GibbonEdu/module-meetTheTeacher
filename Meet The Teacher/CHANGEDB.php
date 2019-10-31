@@ -85,3 +85,8 @@ INSERT INTO `gibbonPermission` (`gibbonRoleID` ,`gibbonActionID`) VALUES ('001',
 ++$count;
 $sql[$count][0] = '1.1.07';
 $sql[$count][1] = "";
+
+//v1.1.08
+++$count;
+$sql[$count][0] = '1.1.08';
+$sql[$count][1] = "UPDATE gibbonSetting SET value='1.1.08' WHERE scope='Meet The Teacher' AND name='version';end";
