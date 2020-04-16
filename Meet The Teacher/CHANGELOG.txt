@@ -1,5 +1,9 @@
 CHANGELOG
 
+1.1.09
+------
+Add a setting to monitor the last sync date
+
 1.1.08
 ------
 Various post v1.1.07 tweaks

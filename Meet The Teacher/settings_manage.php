@@ -41,6 +41,11 @@ if (isActionAccessible($guid, $connection2, '/modules/Meet The Teacher/settings_
 
     $row = $form->addRow()->addHeading(__('API Settings'));
 
+    $setting = getSettingByScope($connection2, 'Meet The Teacher', 'lastSync', true);
+    $row = $form->addRow();
+        $row->addLabel($setting['name'], __($setting['nameDisplay']))->description(__($setting['description']));
+        $row->addTextField($setting['name'])->setValue($setting['value'])->readonly();
+
     $setting = getSettingByScope($connection2, 'Meet The Teacher', 'apiKey', true);
     $row = $form->addRow();
         $row->addLabel($setting['name'], __($setting['nameDisplay']))->description(__($setting['description']));

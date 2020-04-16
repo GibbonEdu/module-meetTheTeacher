@@ -90,3 +90,10 @@ $sql[$count][1] = "";
 ++$count;
 $sql[$count][0] = '1.1.08';
 $sql[$count][1] = "UPDATE gibbonSetting SET value='1.1.08' WHERE scope='Meet The Teacher' AND name='version';end";
+
+//v1.1.09
+++$count;
+$sql[$count][0] = '1.1.09';
+$sql[$count][1] = "
+INSERT INTO `gibbonSetting` (`gibbonSettingID` ,`scope` ,`name` ,`nameDisplay` ,`description` ,`value`) VALUES (NULL , 'Meet The Teacher', 'lastSync', 'Last Sync', '', 'N/A');end
+";

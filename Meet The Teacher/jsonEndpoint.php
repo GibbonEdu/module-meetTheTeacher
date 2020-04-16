@@ -17,9 +17,13 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-	include './modConfig.php';
+use Gibbon\Domain\System\SettingGateway;
+use Gibbon\Services\Format;
 
-	$canContinue = false;
+include './modConfig.php';
+
+    $canContinue = false;
+    $settingGateway = $container->get(SettingGateway::class);
 
 	$apiKeyProvided = null;
 	if (empty($APIKey)) {
@@ -36,6 +40,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 		else {
 			$apiKeyProvided = null;
 			if (empty($_POST['apiKey'])) {
+                $settingGateway->updateSettingByScope('Meet The Teacher', 'lastSync', 'Failed: API key not provided');
 				print "An API key has not been provided";
 				http_response_code(400);
 				exit;
@@ -55,6 +60,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 				if($canContinue == false)
 				{
+                    $settingGateway->updateSettingByScope('Meet The Teacher', 'lastSync', 'Failed: IP address not allowed');
 					print "Your IP address is not in the allow list.";
 					http_response_code(403);
 					exit;
@@ -112,9 +118,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
                 }
             }
 
+            $settingGateway->updateSettingByScope('Meet The Teacher', 'lastSync', 'Successful: '.Format::dateTime(date('Y-m-d H:i:s')));
+
 					}
 					catch(Exception $e)
 					{
+                        $settingGateway->updateSettingByScope('Meet The Teacher', 'lastSync', 'Failed: '.$e->getMessage());
 						print "error";
 						var_dump($e);
 					}
