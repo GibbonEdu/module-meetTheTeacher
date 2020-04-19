@@ -96,7 +96,16 @@ function getMeetTheTeacher($connection2, $guid, $gibbonPersonIDChild = null)
         $output .= '</a>';
         $output .= '<br/><br/>';
 
-        $output .= '<p class="noMargin emphasis"><b>'.__('Note').':</b> '.__('Please do not share the bookings URL with anyone, as it contains a unique login code.').'</p>';
+        $output .= '<p class="noMargin emphasis"><b>'.__('Note').':</b> ';
+
+        if (!empty($params['parentCode'])) {
+            $output .= __m("Your login code is {loginCode} and child's homeroom is {homeroom}.", [
+                'loginCode' => $params['parentCode'] ?? '',
+                'homeroom' => $params['StudentClass'] ?? '',
+            ]).' ';
+        }
+        
+        $output .= __m('Please do not share the bookings URL with anyone, as it contains your unique login code.').'</p>';
         $output .= '</div><br/>';
     }
 

@@ -1,5 +1,9 @@
 CHANGELOG
 
+1.1.10
+------
+Add the parent login code to the MTT dashboard tab
+
 1.1.09
 ------
 Add a setting to monitor the last sync date
