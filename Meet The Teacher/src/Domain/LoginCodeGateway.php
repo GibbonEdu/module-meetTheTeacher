@@ -29,7 +29,7 @@ class LoginCodeGateway extends QueryableGateway
 
     private static $tableName = 'meetTheTeacherLogin';
     private static $primaryKey = 'meetTheTeacherLoginID';
-    private static $searchableColumns = ['gibbonPerson.preferredName', 'gibbonPerson.surname', 'gibbonPerson.username'];
+    private static $searchableColumns = ['gibbonPerson.preferredName', 'gibbonPerson.surname', 'gibbonPerson.username', 'gibbonPerson.email'];
     
     /**
      * @param QueryCriteria $criteria
@@ -40,7 +40,7 @@ class LoginCodeGateway extends QueryableGateway
         $query = $this
             ->newQuery()
             ->from($this->getTableName())
-            ->cols(['meetTheTeacherLogin.meetTheTeacherLoginID', 'gibbonPerson.title', 'gibbonPerson.preferredName', 'gibbonPerson.username', 'gibbonPerson.surname', 'gibbonPerson.status', 'meetTheTeacherLogin.loginCode'])
+            ->cols(['meetTheTeacherLogin.meetTheTeacherLoginID', 'gibbonPerson.title', 'gibbonPerson.preferredName', 'gibbonPerson.username', 'gibbonPerson.surname', 'gibbonPerson.status', 'gibbonPerson.email', 'meetTheTeacherLogin.loginCode'])
             ->innerJoin('gibbonPerson', 'gibbonPerson.gibbonPersonID=meetTheTeacherLogin.gibbonPersonID');
 
         return $this->runQuery($query, $criteria);

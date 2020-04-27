@@ -76,14 +76,16 @@ if (isActionAccessible($guid, $connection2, '/modules/Meet The Teacher/settings_
         $row->addURL($setting['name'])->setValue($setting['value'])->maxLength(100)->isRequired();
 
     $setting = getSettingByScope($connection2, 'Meet The Teacher', 'text', true);
-    $row = $form->addRow();
-        $row->addLabel($setting['name'], __($setting['nameDisplay']))->description($setting['description']);
-        $row->addTextarea($setting['name'])->setValue($setting['value']);
+    $col = $form->addRow()->addColumn();
+        $col->addLabel($setting['name'], __($setting['nameDisplay']))->description(__($setting['description']));
+        $col->addEditor($setting['name'], $guid)->setValue($setting['value'])->setRows(8);
 
     $setting = getSettingByScope($connection2, 'Meet The Teacher', 'textUnavailable', true);
-    $row = $form->addRow();
-        $row->addLabel($setting['name'], __($setting['nameDisplay']))->description($setting['description']);
-        $row->addTextarea($setting['name'])->setValue($setting['value']);
+    $col = $form->addRow()->addColumn();
+        $col->addLabel($setting['name'], __($setting['nameDisplay']))->description(__($setting['description']));
+        $col->addEditor($setting['name'], $guid)->setValue($setting['value'])->setRows(8);
+    
+    $row = $form->addRow()->addHeading(__('Parent Login Access'));
 
     $setting = getSettingByScope($connection2, 'Meet The Teacher', 'yearGroups', true);
     $row = $form->addRow();

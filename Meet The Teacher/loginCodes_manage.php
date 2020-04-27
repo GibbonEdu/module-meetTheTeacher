@@ -37,7 +37,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Meet The Teacher/loginCode
     $loginCodeGateway = $container->get(LoginCodeGateway::class);
 
     // QUERY
-    $criteria = $loginCodeGateway->newQueryCriteria()
+    $criteria = $loginCodeGateway->newQueryCriteria(true)
         ->searchBy($loginCodeGateway->getSearchableColumns(), $search)
         ->sortBy(['surname', 'preferredName'])
         ->fromPOST();
@@ -49,7 +49,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Meet The Teacher/loginCode
     $form->addHiddenValue('q', '/modules/Meet The Teacher/loginCodes_manage.php');
 
     $row = $form->addRow();
-        $row->addLabel('search', __('Search For'))->description(__('Preferred, surname, username'));
+        $row->addLabel('search', __('Search For'))->description(__('Preferred, surname, username, email'));
         $row->addTextField('search')->setValue($criteria->getSearchText());
 
     $row = $form->addRow();
@@ -80,6 +80,9 @@ if (isActionAccessible($guid, $connection2, '/modules/Meet The Teacher/loginCode
         ->format(function ($person) {
             return Format::name($person['title'], $person['preferredName'], $person['surname'], 'Staff', true, true);
         });
+
+    $table->addColumn('email', __('Email'));
+
     $table->addColumn('loginCode', __m('Login Code'));
 
 

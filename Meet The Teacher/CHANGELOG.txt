@@ -1,5 +1,10 @@
 CHANGELOG
 
+1.1.11
+------
+Add email as a searchable column in Manage Login Codes
+Add a rich text editor for parent dashboard text in Manage Settings
+
 1.1.10
 ------
 Add the parent login code to the MTT dashboard tab
@@ -24,7 +29,6 @@ Added the ability to manage parent login codes
 ------
 Refactored Breadcrumbs for version >= v17
 Set value for input 'apiVersion' in Manage Settings
->>>>>>> 9683168b913ee60e9c2c02bae6f2064a5c9e62d9
 
 1.1.04
 ------

@@ -102,3 +102,8 @@ INSERT INTO `gibbonSetting` (`gibbonSettingID` ,`scope` ,`name` ,`nameDisplay` ,
 ++$count;
 $sql[$count][0] = '1.1.10';
 $sql[$count][1] = "UPDATE gibbonSetting SET value='1.1.10' WHERE scope='Meet The Teacher' AND name='version';end";
+
+//v1.1.11
+++$count;
+$sql[$count][0] = '1.1.11';
+$sql[$count][1] = "UPDATE gibbonSetting SET value='1.1.11' WHERE scope='Meet The Teacher' AND name='version';end";
