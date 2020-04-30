@@ -107,3 +107,8 @@ $sql[$count][1] = "UPDATE gibbonSetting SET value='1.1.10' WHERE scope='Meet The
 ++$count;
 $sql[$count][0] = '1.1.11';
 $sql[$count][1] = "UPDATE gibbonSetting SET value='1.1.11' WHERE scope='Meet The Teacher' AND name='version';end";
+
+//v1.1.12
+++$count;
+$sql[$count][0] = '1.1.12';
+$sql[$count][1] = "UPDATE gibbonSetting SET value='1.1.12' WHERE scope='Meet The Teacher' AND name='version';end";

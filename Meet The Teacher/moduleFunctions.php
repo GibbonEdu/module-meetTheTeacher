@@ -90,21 +90,21 @@ function getMeetTheTeacher($connection2, $guid, $gibbonPersonIDChild = null)
         }
 
         $output .= '<br/>';
-        $output .= '<a href="'.$url.'?isPostback=true&'.http_build_query($params).'" target="_blank" style="font-size:16px;">';
+        $output .= '<div class="text-base leading-normal">';
+        $output .= '<b>'.__('Click to Login').': </b>';
+        $output .= '<a href="'.$url.'?isPostback=true&'.http_build_query($params).'" target="_blank">';
         $output .= formatName('', $student['preferredName'], $student['surname'], 'Student', false, true);
         $output .= ' - '.$student['yearGroupName'];
         $output .= '</a>';
-        $output .= '<br/><br/>';
+        $output .= '</div>';
+        $output .= '<br/>';
+
+        $output .= '<div class="text-sm leading-normal">';
+        $output .= '<b>'.__('Login Code').': </b>'.$params['parentCode'].'<br/>';
+        $output .= '<b>'.__('Form Group').': </b>'.$params['StudentClass'].'<br/><br/>';
+        $output .= '</div>';
 
         $output .= '<p class="noMargin emphasis"><b>'.__('Note').':</b> ';
-
-        if (!empty($params['parentCode'])) {
-            $output .= __m("Your login code is {loginCode} and child's homeroom is {homeroom}.", [
-                'loginCode' => $params['parentCode'] ?? '',
-                'homeroom' => $params['StudentClass'] ?? '',
-            ]).' ';
-        }
-        
         $output .= __m('Please do not share the bookings URL with anyone, as it contains your unique login code.').'</p>';
         $output .= '</div><br/>';
     }

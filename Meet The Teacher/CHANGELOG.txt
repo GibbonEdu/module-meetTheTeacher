@@ -1,5 +1,9 @@
 CHANGELOG
 
+1.1.12
+------
+Make the login code even more visible on the MTT dashboard tab
+
 1.1.11
 ------
 Add email as a searchable column in Manage Login Codes
