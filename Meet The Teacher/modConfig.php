@@ -48,7 +48,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	include $PESMOD_DIR . '/domains/IndividualNeedsGroupLink.php';
 	include $PESMOD_DIR . '/domains/Contact.php';
 	include $PESMOD_DIR . '/domains/ContactLink.php';
-	include $PESMOD_DIR . '/domains/RollGroup.php';
+	include $PESMOD_DIR . '/domains/FormGroup.php';
 	include $PESMOD_DIR . '/domains/ClassLink.php';
 
 	include $PESMOD_DIR . '/controllers/interfaces/PESAPIController.php';
@@ -59,7 +59,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	include $PESMOD_DIR . '/controllers/IndividualNeedsGroupController.php';
 	include $PESMOD_DIR . '/controllers/ContactController.php';
 	include $PESMOD_DIR . '/controllers/ContactLinkController.php';
-	include $PESMOD_DIR . '/controllers/RollGroupController.php';
+	include $PESMOD_DIR . '/controllers/FormGroupController.php';
 	include $PESMOD_DIR . '/controllers/ClassController.php';
 	include $PESMOD_DIR . '/controllers/HeadOfYearController.php';
 

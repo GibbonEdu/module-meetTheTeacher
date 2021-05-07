@@ -91,7 +91,7 @@ class IndividualNeedsGroupController implements PESAPIController
                 'Individual Needs' as 'GroupName'
               FROM gibbonPerson s
               JOIN gibbonStudentEnrolment se ON ( se.gibbonPersonID = s.gibbonPersonID )
-              JOIN gibbonRollGroup rg ON ( se.gibbonRollGroupID = rg.gibbonRollGroupID )
+              JOIN gibbonFormGroup rg ON ( se.gibbonFormGroupID = rg.gibbonFormGroupID )
               JOIN gibbonSchoolYear sy ON (se.gibbonSchoolYearID= sy.gibbonSchoolYearID)
               JOIN gibbonIN gin ON (gin.gibbonPersonID=s.gibbonPersonID)
               JOIN gibbonINPersonDescriptor inpd ON (inpd.gibbonPersonID=gin.gibbonPersonID)

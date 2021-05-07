@@ -76,7 +76,7 @@ include './modConfig.php';
 						"CustomGroupLinks" => new CustomGroupController($connection2),
 						"ActivityGroupLinks" => new ActivityGroupController($connection2),
 						"ContactLinks" => New ContactLinkController($connection2),
-						"RollGroupLinks" => new RollGroupController($connection2),
+						"RollGroupLinks" => new FormGroupController($connection2),
 						"ClassLinks" => new ClassController($connection2),
 						"HOYLinks" => new HeadOfYearController($connection2)
 					);

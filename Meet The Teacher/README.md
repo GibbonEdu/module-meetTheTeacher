@@ -37,7 +37,7 @@ Students				| All students who are marked reportable and have a status "Full" or
 CustomGroupLinks		| **Not Implemented**
 ActivtyGroupLinks		| A list of links between students and teachers within activity groups.
 ContactLinks			| A list of links between parents and students. The priority and relationship of the students is shown.
-RollGroupLinks			| A list of roll group links for registration tutors.
+FormGroupLinks			| A list of form group links for registration tutors.
 ClassLinks				| A list of academic class links for timetabled classes.
 IndividualNeedsGroups	| **Only available in Gibbon v15 and up.** A list of links between learning support teachers and children with additional needs. Read the Individual Needs section for more info.
 HeadOfYearController    | **Only available in Gibbon v16 and up.** A list of heads of year, and students in year groups

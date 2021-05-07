@@ -18,13 +18,13 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-class RollGroupController implements PESAPIController
+class FormGroupController implements PESAPIController
 {
 	private $sqlCommands = array(
 		"GetAll" => "
 			select
 				s.gibbonPersonID as 'StudentID',
-				se.gibbonRollGroupID as 'RollGroupID',
+				se.gibbonFormGroupID as 'RollGroupID',
 				rg.name as 'RollGroupName',
 				rg.nameShort as 'RollGroupShortName',
 				rg.gibbonPersonIDTutor as 'TeacherID1',
@@ -33,13 +33,13 @@ class RollGroupController implements PESAPIController
 			from 
 				gibbonPerson s
 			inner join gibbonStudentEnrolment se on se.gibbonPersonID = s.gibbonPersonID
-			inner join gibbonRollGroup rg on rg.gibbonRollGroupID = se.gibbonRollGroupID
+			inner join gibbonFormGroup rg on rg.gibbonFormGroupID = se.gibbonFormGroupID
 		;",
 
 		"GetByID" => "
 			select
 				s.gibbonPersonID as 'StudentID',
-				se.gibbonRollGroupID as 'RollGroupID',
+				se.gibbonFormGroupID as 'RollGroupID',
 				rg.name as 'RollGroupName',
 				rg.nameShort as 'RollGroupShortName',
 				rg.gibbonPersonIDTutor as 'TeacherID1',
@@ -48,7 +48,7 @@ class RollGroupController implements PESAPIController
 			from 
 				gibbonPerson s
 			inner join gibbonStudentEnrolment se on se.gibbonPersonID = s.gibbonPersonID
-			inner join gibbonRollGroup rg on rg.gibbonRollGroupID = se.gibbonRollGroupID
+			inner join gibbonFormGroup rg on rg.gibbonFormGroupID = se.gibbonFormGroupID
 			where
 				s.gibbonPersonID = :ID
 		;"
@@ -65,7 +65,7 @@ class RollGroupController implements PESAPIController
 	{
 		try
 		{
-			return $this->db->RunSQL($this->sqlCommands['GetAll'],"RollGroup",null);
+			return $this->db->RunSQL($this->sqlCommands['GetAll'],"FormGroup",null);
 		}
 		catch(PDOException $_e)
 		{
@@ -77,7 +77,7 @@ class RollGroupController implements PESAPIController
 	{
 		try
 		{
-			return $this->db->RunSQL($this->sqlCommands['GetByID'],"RollGroup",null);
+			return $this->db->RunSQL($this->sqlCommands['GetByID'],"FormGroup",null);
 		}
 		catch(PDOException $_e)
 		{

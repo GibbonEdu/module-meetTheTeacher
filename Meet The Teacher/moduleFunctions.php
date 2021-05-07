@@ -53,14 +53,14 @@ function getMeetTheTeacher($connection2, $guid, $gibbonPersonIDChild = null)
         'gibbonSchoolYearID' => $_SESSION[$guid]['gibbonSchoolYearID'],
         'yearGroups' => $yearGroups,
     );
-    $sql = "SELECT gibbonPerson.gibbonPersonID, gibbonPerson.surname, gibbonPerson.preferredName, gibbonYearGroup.nameShort as yearGroupName, gibbonRollGroup.nameShort as rollGroupName, gibbonPerson.dob
+    $sql = "SELECT gibbonPerson.gibbonPersonID, gibbonPerson.surname, gibbonPerson.preferredName, gibbonYearGroup.nameShort as yearGroupName, gibbonFormGroup.nameShort as formGroupName, gibbonPerson.dob
         FROM gibbonFamilyChild
         JOIN gibbonFamily ON (gibbonFamilyChild.gibbonFamilyID=gibbonFamily.gibbonFamilyID)
         JOIN gibbonFamilyAdult ON (gibbonFamilyAdult.gibbonFamilyID=gibbonFamily.gibbonFamilyID)
         JOIN gibbonPerson ON (gibbonFamilyChild.gibbonPersonID=gibbonPerson.gibbonPersonID)
         JOIN gibbonStudentEnrolment ON (gibbonStudentEnrolment.gibbonPersonID=gibbonPerson.gibbonPersonID)
         JOIN gibbonYearGroup ON (gibbonYearGroup.gibbonYearGroupID=gibbonStudentEnrolment.gibbonYearGroupID)
-        JOIN gibbonRollGroup ON (gibbonRollGroup.gibbonRollGroupID=gibbonStudentEnrolment.gibbonRollGroupID)
+        JOIN gibbonFormGroup ON (gibbonFormGroup.gibbonFormGroupID=gibbonStudentEnrolment.gibbonFormGroupID)
         WHERE gibbonStudentEnrolment.gibbonSchoolYearID=:gibbonSchoolYearID
         AND FIND_IN_SET(gibbonYearGroup.nameShort, :yearGroups)
         AND gibbonPerson.status='Full' AND (dateEnd IS NULL OR dateEnd>=:date)
@@ -86,7 +86,7 @@ function getMeetTheTeacher($connection2, $guid, $gibbonPersonIDChild = null)
             $params['DateOfBirthHelper_Month'] = $dob->format('n');
             $params['DateOfBirthHelper_Year'] = $dob->format('Y');
         } else {
-            $params['StudentClass'] = $student['rollGroupName'];
+            $params['StudentClass'] = $student['formGroupName'];
         }
 
         $output .= '<br/>';

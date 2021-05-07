@@ -38,7 +38,7 @@ class StudentController implements PESAPIController
 				gibbonStudentEnrolment gse
 			inner join gibbonPerson gp on gp.gibbonPersonID = gse.gibbonPersonID
 			inner join gibbonYearGroup gyg on gyg.gibbonYearGroupID = gse.gibbonYearGroupID
-			inner join gibbonRollGroup grg on grg.gibbonRollGroupID = gse.gibbonRollGroupID
+			inner join gibbonFormGroup grg on grg.gibbonFormGroupID = gse.gibbonFormGroupID
 			inner join gibbonSchoolYear gsy on gse.gibbonSchoolYearID=gsy.gibbonSchoolYearID
 			where
 				gsy.status='Current'
@@ -61,7 +61,7 @@ class StudentController implements PESAPIController
 				gibbonStudentEnrolment gse
 			inner join gibbonPerson gp on gp.gibbonPersonID = gse.gibbonPersonID
 			inner join gibbonYearGroup gyg on gyg.gibbonYearGroupID = gse.gibbonYearGroupID
-			inner join gibbonRollGroup grg on grg.gibbonRollGroupID = gse.gibbonRollGroupID
+			inner join gibbonFormGroup grg on grg.gibbonFormGroupID = gse.gibbonFormGroupID
 			inner join gibbonSchoolYear gsy on gse.gibbonSchoolYearID=gsy.gibbonSchoolYearID
 			where
 				gsy.status='Current'
@@ -85,7 +85,7 @@ class StudentController implements PESAPIController
 				gibbonStudentEnrolment gse
 			inner join gibbonPerson gp on gp.gibbonPersonID = gse.gibbonPersonID
 			inner join gibbonYearGroup gyg on gyg.gibbonYearGroupID = gse.gibbonYearGroupID
-			inner join gibbonRollGroup grg on grg.gibbonRollGroupID = gse.gibbonRollGroupID
+			inner join gibbonFormGroup grg on grg.gibbonFormGroupID = gse.gibbonFormGroupID
 			inner join gibbonSchoolYear gsy on gse.gibbonSchoolYearID=gsy.gibbonSchoolYearID
 			where
 				gp.gibbonPersonID = :ID
