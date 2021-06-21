@@ -39,7 +39,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Meet The Teacher/loginCode
 
     if ($search != '') {
         echo "<div class='linkTop'>";
-        echo "<a href='".$gibbon->session->get('absoluteURL')."/index.php?q=/modules/Meet The Teacher/loginCodes_manage.php&search=$search'>".__('Back to Search Results').'</a>';
+        echo "<a href='".$session->get('absoluteURL')."/index.php?q=/modules/Meet The Teacher/loginCodes_manage.php&search=$search'>".__('Back to Search Results').'</a>';
         echo '</div>';
     }
 
@@ -57,10 +57,10 @@ if (isActionAccessible($guid, $connection2, '/modules/Meet The Teacher/loginCode
         return;
     }
 
-    $form = Form::create('loginCodesManage', $gibbon->session->get('absoluteURL').'/modules/Meet The Teacher/loginCodes_manage_editProcess.php?search='.$search);
+    $form = Form::create('loginCodesManage', $session->get('absoluteURL').'/modules/Meet The Teacher/loginCodes_manage_editProcess.php?search='.$search);
     $form->setFactory(DatabaseFormFactory::create($pdo));
 
-    $form->addHiddenValue('address', $gibbon->session->get('address'));
+    $form->addHiddenValue('address', $session->get('address'));
     $form->addHiddenValue('meetTheTeacherLoginID', $meetTheTeacherLoginID);
 
     $row = $form->addRow();
