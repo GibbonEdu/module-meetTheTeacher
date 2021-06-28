@@ -39,6 +39,6 @@ if (isActionAccessible($guid, $connection2, '/modules/Meet The Teacher/loginCode
         return;
     }
 
-    $form = DeleteForm::createForm($gibbon->session->get('absoluteURL').'/modules/Meet The Teacher/loginCodes_manage_deleteProcess.php?meetTheTeacherLoginID='.$meetTheTeacherLoginID);
+    $form = DeleteForm::createForm($session->get('absoluteURL').'/modules/Meet The Teacher/loginCodes_manage_deleteProcess.php?meetTheTeacherLoginID='.$meetTheTeacherLoginID);
     echo $form->getOutput();
 }

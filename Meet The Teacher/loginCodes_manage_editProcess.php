@@ -24,7 +24,7 @@ require_once '../../gibbon.php';
 $search = $_GET['search'] ?? '';
 $meetTheTeacherLoginID = $_POST['meetTheTeacherLoginID'] ?? '';
 
-$URL = $gibbon->session->get('absoluteURL').'/index.php?q=/modules/Meet The Teacher/loginCodes_manage_edit.php&meetTheTeacherLoginID='.$meetTheTeacherLoginID.'&search='.$search;
+$URL = $session->get('absoluteURL').'/index.php?q=/modules/Meet The Teacher/loginCodes_manage_edit.php&meetTheTeacherLoginID='.$meetTheTeacherLoginID.'&search='.$search;
 
 if (isActionAccessible($guid, $connection2, '/modules/Meet The Teacher/loginCodes_manage_edit.php') == false) {
     $URL .= '&return=error0';

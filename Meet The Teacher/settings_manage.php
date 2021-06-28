@@ -32,10 +32,10 @@ if (isActionAccessible($guid, $connection2, '/modules/Meet The Teacher/settings_
         returnProcess($guid, $_GET['return'], null, null);
     }
 
-    $form = Form::create('settings_manage', $_SESSION[$guid]['absoluteURL'].'/modules/'.$_SESSION[$guid]['module'].'/settings_manageProcess.php');
+    $form = Form::create('settings_manage', $session->get('absoluteURL').'/modules/'.$session->get('module').'/settings_manageProcess.php');
 
-    $form->addHiddenValue('address', $_SESSION[$guid]['address']);
-    
+    $form->addHiddenValue('address', $session->get('address'));
+
     $setting = getSettingByScope($connection2, 'Meet The Teacher', 'version', true);
     $form->addHiddenValue('apiVersion', $setting['value']);
 
@@ -84,7 +84,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Meet The Teacher/settings_
     $col = $form->addRow()->addColumn();
         $col->addLabel($setting['name'], __($setting['nameDisplay']))->description(__($setting['description']));
         $col->addEditor($setting['name'], $guid)->setValue($setting['value'])->setRows(8);
-    
+
     $row = $form->addRow()->addHeading(__('Parent Login Access'));
 
     $setting = getSettingByScope($connection2, 'Meet The Teacher', 'yearGroups', true);

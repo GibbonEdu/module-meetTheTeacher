@@ -23,7 +23,7 @@ require_once '../../gibbon.php';
 
 $meetTheTeacherLoginID = $_GET['meetTheTeacherLoginID'] ?? '';
 
-$URL = $gibbon->session->get('absoluteURL').'/index.php?q=/modules/Meet The Teacher/loginCodes_manage.php';
+$URL = $session->get('absoluteURL').'/index.php?q=/modules/Meet The Teacher/loginCodes_manage.php';
 
 if (isActionAccessible($guid, $connection2, '/modules/Meet The Teacher/loginCodes_manage_delete.php') == false) {
     $URL .= '&return=error0';

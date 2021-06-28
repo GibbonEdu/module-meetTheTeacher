@@ -42,7 +42,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Meet The Teacher/loginCode
         ->sortBy(['surname', 'preferredName'])
         ->fromPOST();
 
-    $form = Form::create('filter', $_SESSION[$guid]['absoluteURL'].'/index.php', 'get');
+    $form = Form::create('filter', $session->get('absoluteURL').'/index.php', 'get');
     $form->setTitle(__('Search'));
     $form->setClass('noIntBorder fullWidth');
 
@@ -53,7 +53,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Meet The Teacher/loginCode
         $row->addTextField('search')->setValue($criteria->getSearchText());
 
     $row = $form->addRow();
-        $row->addSearchSubmit($gibbon->session, __('Clear Search'));
+        $row->addSearchSubmit($session, __('Clear Search'));
 
     echo $form->getOutput();
 

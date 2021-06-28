@@ -25,7 +25,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 	getSystemSettings($guid, $connection2);
 
 	//Set gibbon absolutePath
-	$GIBBON_DIR = $_SESSION[$guid]['absolutePath'];
+	$GIBBON_DIR = $session->get('absolutePath');
 	$PESMOD_DIR = $GIBBON_DIR . '/modules/Meet The Teacher';
 
 	$APIKey = getSettingByScope($connection2, 'Meet The Teacher', 'apiKey');

@@ -19,31 +19,27 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 
 include '../../gibbon.php';
 
-$URL = $_SESSION[$guid]['absoluteURL'].'/index.php?q=/modules/'.getModuleName($_POST['address']).'/settings_manage.php';
+$URL = $session->get('absoluteURL').'/index.php?q=/modules/'.getModuleName($_POST['address']).'/settings_manage.php';
 
 if (isActionAccessible($guid, $connection2, '/modules/Meet The Teacher/settings_manage.php') == false) {
     $URL .= '&return=error0';
     header("Location: {$URL}");
 } else {
     //Proceed!
-    $apiKey = $_POST['apiKey'];
-    $allowedIPs = $_POST['allowedIPs'];
-    $lsTeacherRole = $_POST['lsTeacherRole'];
+    $apiKey = $_POST['apiKey'] ?? '';
+    $allowedIPs = $_POST['allowedIPs'] ?? '';
+    $lsTeacherRole = $_POST['lsTeacherRole'] ?? '';
     $lsIgnoreClasses = 0;
     if(isset($_POST['lsIgnoreClasses']))
     {
       $lsIgnoreClasses = $_POST['lsIgnoreClasses'] ? 1 : 0;
     }
-    $modVer = '';
-    if(isset($_POST['apiVersion']))
-    {
-      $modVer = $_POST['apiVersion'];
-    }
-    $url = $_POST['url'];
-    $text = $_POST['text'];
-    $textUnavailable = $_POST['textUnavailable'];
-    $yearGroups = $_POST['yearGroups'];
-    $authenticateBy = $_POST['authenticateBy'];
+    $modVer = $_POST['apiVersion'] ?? '';
+    $url = $_POST['url'] ?? '';
+    $text = $_POST['text'] ?? '';
+    $textUnavailable = $_POST['textUnavailable'] ?? '';
+    $yearGroups = $_POST['yearGroups'] ?? '';
+    $authenticateBy = $_POST['authenticateBy'] ?? '';
 
     //Validate Inputs
     if ($apiKey == '' or $allowedIPs == '' or $url == '' or $text == '' or $yearGroups == '') {
