@@ -19,6 +19,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 function getMeetTheTeacher($connection2, $guid, $gibbonPersonIDChild = null)
 {
+    global $session;
+    
     $output = '';
 
     $url = getSettingByScope($connection2, 'Meet The Teacher', 'url');
@@ -28,7 +30,7 @@ function getMeetTheTeacher($connection2, $guid, $gibbonPersonIDChild = null)
     $authenticateBy = getSettingByScope($connection2, 'Meet The Teacher', 'authenticateBy');
 
     // Get parent details to be passed to URL params
-    $data = array('gibbonPersonID' => $_SESSION[$guid]['gibbonPersonID']);
+    $data = array('gibbonPersonID' => $session->get('gibbonPersonID'));
     $sql = "SELECT DISTINCT email AS parentEmailAddress, email AS parentEmailAddressConfirm, meetTheTeacherLogin.loginCode as parentCode
             FROM gibbonPerson
             LEFT JOIN meetTheTeacherLogin ON (gibbonPerson.gibbonPersonID=meetTheTeacherLogin.gibbonPersonID)
@@ -47,10 +49,10 @@ function getMeetTheTeacher($connection2, $guid, $gibbonPersonIDChild = null)
 
     // Get student details for this parent
     $data = array(
-        'gibbonPersonID' => $_SESSION[$guid]['gibbonPersonID'],
+        'gibbonPersonID' => $session->get('gibbonPersonID'),
         'gibbonPersonIDChild' => $gibbonPersonIDChild,
         'date' => date('Y-m-d'),
-        'gibbonSchoolYearID' => $_SESSION[$guid]['gibbonSchoolYearID'],
+        'gibbonSchoolYearID' => $session->get('gibbonSchoolYearID'),
         'yearGroups' => $yearGroups,
     );
     $sql = "SELECT gibbonPerson.gibbonPersonID, gibbonPerson.surname, gibbonPerson.preferredName, gibbonYearGroup.nameShort as yearGroupName, gibbonFormGroup.nameShort as formGroupName, gibbonPerson.dob

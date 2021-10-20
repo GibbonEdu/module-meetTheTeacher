@@ -122,3 +122,8 @@ $sql[$count][1] = "UPDATE gibbonSetting SET value='formGroup' WHERE scope='Meet 
 ++$count;
 $sql[$count][0] = '1.2.01';
 $sql[$count][1] = "";
+
+//v1.2.02
+++$count;
+$sql[$count][0] = '1.2.02';
+$sql[$count][1] = "";
