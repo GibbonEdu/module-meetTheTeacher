@@ -18,6 +18,9 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
 use Gibbon\Forms\Form;
+use Gibbon\Domain\System\SettingGateway;
+
+$settingGateway = $container->get(SettingGateway::class);
 
 if (isActionAccessible($guid, $connection2, '/modules/Meet The Teacher/settings_manage.php') == false) {
     //Acess denied
@@ -28,72 +31,68 @@ if (isActionAccessible($guid, $connection2, '/modules/Meet The Teacher/settings_
     //Proceed!
     $page->breadcrumbs->add(__('Manage Settings'));
 
-    if (isset($_GET['return'])) {
-        returnProcess($guid, $_GET['return'], null, null);
-    }
-
     $form = Form::create('settings_manage', $session->get('absoluteURL').'/modules/'.$session->get('module').'/settings_manageProcess.php');
 
     $form->addHiddenValue('address', $session->get('address'));
 
-    $setting = getSettingByScope($connection2, 'Meet The Teacher', 'version', true);
+    $setting = $settingGateway->getSettingByScope('Meet The Teacher', 'version', true);
     $form->addHiddenValue('apiVersion', $setting['value']);
 
     $row = $form->addRow()->addHeading(__('API Settings'));
 
-    $setting = getSettingByScope($connection2, 'Meet The Teacher', 'lastSync', true);
+    $setting = $settingGateway->getSettingByScope('Meet The Teacher', 'lastSync', true);
     $row = $form->addRow();
         $row->addLabel($setting['name'], __($setting['nameDisplay']))->description(__($setting['description']));
         $row->addTextField($setting['name'])->setValue($setting['value'])->readonly();
 
-    $setting = getSettingByScope($connection2, 'Meet The Teacher', 'apiKey', true);
+    $setting = $settingGateway->getSettingByScope('Meet The Teacher', 'apiKey', true);
     $row = $form->addRow();
         $row->addLabel($setting['name'], __($setting['nameDisplay']))->description(__($setting['description']));
         $row->addTextField($setting['name'])->setValue($setting['value'])->isRequired();
 
-    $setting = getSettingByScope($connection2, 'Meet The Teacher', 'allowedIPs', true);
+    $setting = $settingGateway->getSettingByScope('Meet The Teacher', 'allowedIPs', true);
     $row = $form->addRow();
         $row->addLabel($setting['name'], __($setting['nameDisplay']))->description(__($setting['description']));
         $row->addTextArea($setting['name'])->setValue($setting['value'])->isRequired();
 
     $data = array();
     $sql = "SELECT gibbonRoleID as value, name FROM gibbonRole WHERE category='Staff' ORDER BY name";
-    $setting = getSettingByScope($connection2, 'Meet The Teacher', 'lsTeacherRole', true);
+    $setting = $settingGateway->getSettingByScope('Meet The Teacher', 'lsTeacherRole', true);
     $row = $form->addRow();
         $row->addLabel($setting['name'], __($setting['nameDisplay']))->description(__($setting['description']));
         $row->addSelect($setting['name'])->fromQuery($pdo, $sql, $data)->selected($setting['value'])->placeholder();
 
-    $setting = getSettingByScope($connection2, 'Meet The Teacher', 'lsIgnoreClasses',true);
+    $setting = $settingGateway->getSettingByScope('Meet The Teacher', 'lsIgnoreClasses',true);
     $row = $form->addRow();
         $row->addLabel($setting['name'],__($setting['nameDisplay']))->description(__($setting['description']));
         $row->addCheckbox($setting['name'])->checked($setting['value'] == "1" ? "on" : "off");
 
     $row = $form->addRow()->addHeading(__('Parent Dashboard'));
 
-    $setting = getSettingByScope($connection2, 'Meet The Teacher', 'url', true);
+    $setting = $settingGateway->getSettingByScope('Meet The Teacher', 'url', true);
     $row = $form->addRow();
         $row->addLabel($setting['name'], __($setting['nameDisplay']))->description(__($setting['description']));
         $row->addURL($setting['name'])->setValue($setting['value'])->maxLength(100)->isRequired();
 
-    $setting = getSettingByScope($connection2, 'Meet The Teacher', 'text', true);
+    $setting = $settingGateway->getSettingByScope('Meet The Teacher', 'text', true);
     $col = $form->addRow()->addColumn();
         $col->addLabel($setting['name'], __($setting['nameDisplay']))->description(__($setting['description']));
         $col->addEditor($setting['name'], $guid)->setValue($setting['value'])->setRows(8);
 
-    $setting = getSettingByScope($connection2, 'Meet The Teacher', 'textUnavailable', true);
+    $setting = $settingGateway->getSettingByScope('Meet The Teacher', 'textUnavailable', true);
     $col = $form->addRow()->addColumn();
         $col->addLabel($setting['name'], __($setting['nameDisplay']))->description(__($setting['description']));
         $col->addEditor($setting['name'], $guid)->setValue($setting['value'])->setRows(8);
 
     $row = $form->addRow()->addHeading(__('Parent Login Access'));
 
-    $setting = getSettingByScope($connection2, 'Meet The Teacher', 'yearGroups', true);
+    $setting = $settingGateway->getSettingByScope('Meet The Teacher', 'yearGroups', true);
     $row = $form->addRow();
         $row->addLabel($setting['name'], __($setting['nameDisplay']))->description($setting['description']);
         $row->addTextarea($setting['name'])->setValue($setting['value']);
 
     $authentication = array('formGroup' => 'Child Class', 'dob' => 'Child Date of Birth');
-    $setting = getSettingByScope($connection2, 'Meet The Teacher', 'authenticateBy', true);
+    $setting = $settingGateway->getSettingByScope('Meet The Teacher', 'authenticateBy', true);
     $row = $form->addRow();
         $row->addLabel($setting['name'], __($setting['nameDisplay']))->description($setting['description']);
         $row->addSelect($setting['name'])->fromArray($authentication)->selected($setting['value']);

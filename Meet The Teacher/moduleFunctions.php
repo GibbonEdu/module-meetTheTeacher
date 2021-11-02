@@ -17,17 +17,21 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+use Gibbon\Services\Format;
+use Gibbon\Domain\System\SettingGateway;
+
 function getMeetTheTeacher($connection2, $guid, $gibbonPersonIDChild = null)
 {
-    global $session;
-    
+    global $session, $container;
+
     $output = '';
 
-    $url = getSettingByScope($connection2, 'Meet The Teacher', 'url');
-    $text = getSettingByScope($connection2, 'Meet The Teacher', 'text');
-    $textUnavailable = getSettingByScope($connection2, 'Meet The Teacher', 'textUnavailable');
-    $yearGroups = getSettingByScope($connection2, 'Meet The Teacher', 'yearGroups');
-    $authenticateBy = getSettingByScope($connection2, 'Meet The Teacher', 'authenticateBy');
+	$settingGateway = $container->get(SettingGateway::class);
+    $url = $settingGateway->getSettingByScope('Meet The Teacher', 'url');
+    $text = $settingGateway->getSettingByScope('Meet The Teacher', 'text');
+    $textUnavailable = $settingGateway->getSettingByScope('Meet The Teacher', 'textUnavailable');
+    $yearGroups = $settingGateway->getSettingByScope('Meet The Teacher', 'yearGroups');
+    $authenticateBy = $settingGateway->getSettingByScope('Meet The Teacher', 'authenticateBy');
 
     // Get parent details to be passed to URL params
     $data = array('gibbonPersonID' => $session->get('gibbonPersonID'));
@@ -95,7 +99,7 @@ function getMeetTheTeacher($connection2, $guid, $gibbonPersonIDChild = null)
         $output .= '<div class="text-base leading-normal">';
         $output .= '<b>'.__('Click to Login').': </b>';
         $output .= '<a href="'.$url.'?isPostback=true&'.http_build_query($params).'" target="_blank">';
-        $output .= formatName('', $student['preferredName'], $student['surname'], 'Student', false, true);
+        $output .= Format::name('', $student['preferredName'], $student['surname'], 'Student', false, true);
         $output .= ' - '.$student['yearGroupName'];
         $output .= '</a>';
         $output .= '</div>';

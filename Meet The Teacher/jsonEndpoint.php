@@ -17,8 +17,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-use Gibbon\Domain\System\SettingGateway;
 use Gibbon\Services\Format;
+use Gibbon\Domain\System\SettingGateway;
 
 include './modConfig.php';
 
@@ -85,9 +85,9 @@ include './modConfig.php';
 					try
 					{
 						$response['Info'] = array(
-						"APIVersion" => getSettingByScope($connection2, 'Meet The Teacher', 'version',true)['value'],
-						"IgnoreClasses" => getSettingByScope($connection2, 'Meet The Teacher', 'lsIgnoreClasses',true)['value'],
-						"LSRole" => getSettingByScope($connection2, 'Meet The Teacher', 'lsTeacherRole', true)['value'],
+						"APIVersion" => $settingGateway->getSettingByScope('Meet The Teacher', 'version',true)['value'],
+						"IgnoreClasses" => $settingGateway->getSettingByScope('Meet The Teacher', 'lsIgnoreClasses',true)['value'],
+						"LSRole" => $settingGateway->getSettingByScope('Meet The Teacher', 'lsTeacherRole', true)['value'],
 						"GibbonVersion" => $version
 						);
 						foreach($controllers as $controllerNode => $controller)
@@ -98,8 +98,8 @@ include './modConfig.php';
             if(version_compare($version, "15.0.00", '>='))
             {
                 $INController = new IndividualNeedsGroupController($connection2); //Implemented in version 15.0.00
-                $lsrole = getSettingByScope($connection2, 'Meet The Teacher', 'lsTeacherRole', true)['value'];
-                $ignoreClassAllocations = getSettingByScope($connection2, 'Meet The Teacher', 'lsIgnoreClasses',true)['value'];
+                $lsrole = $settingGateway->getSettingByScope('Meet The Teacher', 'lsTeacherRole', true)['value'];
+                $ignoreClassAllocations = $settingGateway->getSettingByScope('Meet The Teacher', 'lsIgnoreClasses',true)['value'];
                 if($lsrole == "")
                 {
                     //Just get everything

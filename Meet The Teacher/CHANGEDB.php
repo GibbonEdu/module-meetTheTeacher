@@ -127,3 +127,10 @@ $sql[$count][1] = "";
 ++$count;
 $sql[$count][0] = '1.2.02';
 $sql[$count][1] = "";
+
+//v1.2.03
+++$count;
+$sql[$count][0] = '1.2.03';
+$sql[$count][1] = "
+INSERT IGNORE INTO `gibbonSetting` (`gibbonSettingID` ,`scope` ,`name` ,`nameDisplay` ,`description` ,`value`) VALUES (NULL , 'Meet The Teacher', 'lastSync', 'Last Sync', '', 'N/A');end
+";

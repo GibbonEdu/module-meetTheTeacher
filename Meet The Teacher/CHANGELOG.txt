@@ -1,5 +1,10 @@
 CHANGELOG
 
+1.2.03
+------
+Fixed lastSync missing on install
+Refactored deprecated function calls
+
 1.2.02
 ------
 Final session refactoring

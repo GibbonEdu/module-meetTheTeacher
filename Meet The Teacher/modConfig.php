@@ -17,50 +17,53 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-	//Load Gibbon includes
-	include '../../config.php';
-	include '../../gibbon.php';
+use Gibbon\Domain\System\SettingGateway;
 
-	//Get system settings
-	getSystemSettings($guid, $connection2);
+//Load Gibbon includes
+include '../../config.php';
+include '../../gibbon.php';
 
-	//Set gibbon absolutePath
-	$GIBBON_DIR = $session->get('absolutePath');
-	$PESMOD_DIR = $GIBBON_DIR . '/modules/Meet The Teacher';
+//Get system settings
+getSystemSettings($guid, $connection2);
 
-	$APIKey = getSettingByScope($connection2, 'Meet The Teacher', 'apiKey');
-	$allowedIPsTemp = getSettingByScope($connection2, 'Meet The Teacher', 'allowedIPs');
-	if ($allowedIPsTemp == '') {
-		$ALLOWED_IPS = null;
-	}
-	else {
-		$ALLOWED_IPS = explode(",", $allowedIPsTemp);
-	}
+//Set gibbon absolutePath
+$GIBBON_DIR = $session->get('absolutePath');
+$PESMOD_DIR = $GIBBON_DIR . '/modules/Meet The Teacher';
 
-	include $PESMOD_DIR . '/common/DatabaseHelper.php';
+$settingGateway = $container->get(SettingGateway::class);
+$APIKey = $settingGateway->getSettingByScope('Meet The Teacher', 'apiKey');
+$allowedIPsTemp = $settingGateway->getSettingByScope('Meet The Teacher', 'allowedIPs');
+if ($allowedIPsTemp == '') {
+	$ALLOWED_IPS = null;
+}
+else {
+	$ALLOWED_IPS = explode(",", $allowedIPsTemp);
+}
 
-	include $PESMOD_DIR . '/domains/GroupLink.php';
-	include $PESMOD_DIR . '/domains/Person.php';
-	include $PESMOD_DIR . '/domains/CustomGroupLink.php';
-	include $PESMOD_DIR . '/domains/ActivityGroupLink.php';
-	include $PESMOD_DIR . '/domains/Student.php';
-	include $PESMOD_DIR . '/domains/StaffMember.php';
-	include $PESMOD_DIR . '/domains/IndividualNeedsGroupLink.php';
-	include $PESMOD_DIR . '/domains/Contact.php';
-	include $PESMOD_DIR . '/domains/ContactLink.php';
-	include $PESMOD_DIR . '/domains/FormGroup.php';
-	include $PESMOD_DIR . '/domains/ClassLink.php';
+include $PESMOD_DIR . '/common/DatabaseHelper.php';
 
-	include $PESMOD_DIR . '/controllers/interfaces/PESAPIController.php';
-	include $PESMOD_DIR . '/controllers/ActivityGroupController.php';
-	include $PESMOD_DIR . '/controllers/CustomGroupController.php';
-	include $PESMOD_DIR . '/controllers/StudentController.php';
-	include $PESMOD_DIR . '/controllers/StaffController.php';
-	include $PESMOD_DIR . '/controllers/IndividualNeedsGroupController.php';
-	include $PESMOD_DIR . '/controllers/ContactController.php';
-	include $PESMOD_DIR . '/controllers/ContactLinkController.php';
-	include $PESMOD_DIR . '/controllers/FormGroupController.php';
-	include $PESMOD_DIR . '/controllers/ClassController.php';
-	include $PESMOD_DIR . '/controllers/HeadOfYearController.php';
+include $PESMOD_DIR . '/domains/GroupLink.php';
+include $PESMOD_DIR . '/domains/Person.php';
+include $PESMOD_DIR . '/domains/CustomGroupLink.php';
+include $PESMOD_DIR . '/domains/ActivityGroupLink.php';
+include $PESMOD_DIR . '/domains/Student.php';
+include $PESMOD_DIR . '/domains/StaffMember.php';
+include $PESMOD_DIR . '/domains/IndividualNeedsGroupLink.php';
+include $PESMOD_DIR . '/domains/Contact.php';
+include $PESMOD_DIR . '/domains/ContactLink.php';
+include $PESMOD_DIR . '/domains/FormGroup.php';
+include $PESMOD_DIR . '/domains/ClassLink.php';
+
+include $PESMOD_DIR . '/controllers/interfaces/PESAPIController.php';
+include $PESMOD_DIR . '/controllers/ActivityGroupController.php';
+include $PESMOD_DIR . '/controllers/CustomGroupController.php';
+include $PESMOD_DIR . '/controllers/StudentController.php';
+include $PESMOD_DIR . '/controllers/StaffController.php';
+include $PESMOD_DIR . '/controllers/IndividualNeedsGroupController.php';
+include $PESMOD_DIR . '/controllers/ContactController.php';
+include $PESMOD_DIR . '/controllers/ContactLinkController.php';
+include $PESMOD_DIR . '/controllers/FormGroupController.php';
+include $PESMOD_DIR . '/controllers/ClassController.php';
+include $PESMOD_DIR . '/controllers/HeadOfYearController.php';
 
 ?>

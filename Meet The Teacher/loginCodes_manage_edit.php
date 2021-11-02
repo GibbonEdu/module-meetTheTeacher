@@ -33,10 +33,6 @@ if (isActionAccessible($guid, $connection2, '/modules/Meet The Teacher/loginCode
         ->add(__m('Manage Login Codes'), 'loginCodes_manage.php', ['search' => $search])
         ->add(__m('Edit Login Code'));
 
-    if (isset($_GET['return'])) {
-        returnProcess($guid, $_GET['return'], null, null);
-    }
-
     if ($search != '') {
         echo "<div class='linkTop'>";
         echo "<a href='".$session->get('absoluteURL')."/index.php?q=/modules/Meet The Teacher/loginCodes_manage.php&search=$search'>".__('Back to Search Results').'</a>';

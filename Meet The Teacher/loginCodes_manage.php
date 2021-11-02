@@ -29,10 +29,6 @@ if (isActionAccessible($guid, $connection2, '/modules/Meet The Teacher/loginCode
     // Proceed!
     $page->breadcrumbs->add(__m('Manage Login Codes'));
 
-    if (isset($_GET['return'])) {
-        returnProcess($guid, $_GET['return'], null, null);
-    }
-
     $search = $_GET['search'] ?? '';
     $loginCodeGateway = $container->get(LoginCodeGateway::class);
 
