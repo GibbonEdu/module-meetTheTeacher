@@ -17,6 +17,7 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+use Gibbon\Http\Url;
 use Gibbon\Forms\Form;
 use Gibbon\Forms\DatabaseFormFactory;
 
@@ -38,9 +39,10 @@ if (isActionAccessible($guid, $connection2, '/modules/Meet The Teacher/loginCode
     $page->return->setEditLink($editLink);
 
     if ($search != '') {
-        echo "<div class='linkTop'>";
-        echo "<a href='".$session->get('absoluteURL')."/index.php?q=/modules/Meet The Teacher/loginCodes_manage.php&search=$search'>".__('Back to Search Results').'</a>';
-        echo '</div>';
+        $params = [
+            "search" => $search
+        ];
+        $page->navigator->addSearchResultsAction(Url::fromModuleRoute('Meet The Teacher', 'loginCodes_manage.php')->withQueryParams($params));
     }
 
     $form = Form::create('loginCodesManage', $session->get('absoluteURL').'/modules/Meet The Teacher/loginCodes_manage_addProcess.php?search='.$search);

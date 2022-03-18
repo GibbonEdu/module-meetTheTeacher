@@ -1,4 +1,8 @@
 CHANGELOG
+=========
+1.2.04
+------
+Refactoring of linkTop divs
 
 1.2.03
 ------
