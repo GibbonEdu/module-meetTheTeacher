@@ -1,5 +1,9 @@
 CHANGELOG
 =========
+1.2.05
+------
+Fixed links using form groups with special characters
+
 1.2.04
 ------
 Refactoring of linkTop divs

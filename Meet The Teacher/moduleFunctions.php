@@ -92,13 +92,13 @@ function getMeetTheTeacher($connection2, $guid, $gibbonPersonIDChild = null)
             $params['DateOfBirthHelper_Month'] = $dob->format('n');
             $params['DateOfBirthHelper_Year'] = $dob->format('Y');
         } else {
-            $params['StudentClass'] = $student['formGroupName'];
+            $params['StudentClass'] =  urlencode($student['formGroupName']);
         }
 
         $output .= '<br/>';
         $output .= '<div class="text-base leading-normal">';
         $output .= '<b>'.__('Click to Login').': </b>';
-        $output .= '<a href="'.$url.'?isPostback=true&'.http_build_query($params).'" target="_blank">';
+        $output .= '<a href="'.$url.'?isPostback=true&'.http_build_query($params, "", "&", PHP_QUERY_RFC3986).'" target="_blank">';
         $output .= Format::name('', $student['preferredName'], $student['surname'], 'Student', false, true);
         $output .= ' - '.$student['yearGroupName'];
         $output .= '</a>';
@@ -107,7 +107,7 @@ function getMeetTheTeacher($connection2, $guid, $gibbonPersonIDChild = null)
 
         $output .= '<div class="text-sm leading-normal">';
         $output .= '<b>'.__('Login Code').': </b>'.$params['parentCode'].'<br/>';
-        $output .= '<b>'.__('Form Group').': </b>'.$params['StudentClass'].'<br/><br/>';
+        $output .= '<b>'.__('Form Group').': </b>'.urldecode($params['StudentClass']).'<br/><br/>';
         $output .= '</div>';
 
         $output .= '<p class="noMargin emphasis"><b>'.__('Note').':</b> ';
