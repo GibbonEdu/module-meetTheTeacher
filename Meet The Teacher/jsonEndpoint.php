@@ -28,11 +28,13 @@ include './modConfig.php';
 	$apiKeyProvided = null;
 	if (empty($APIKey)) {
 		print "API Key has not been set in Manage Settings.";
+        $settingGateway->updateSettingByScope('Meet The Teacher', 'lastSync', 'Failed: API Key has not been set in Manage Settings.');
 		http_response_code(400);
 		exit;
 	}
 	else {
 		if (empty($ALLOWED_IPS)) {
+            $settingGateway->updateSettingByScope('Meet The Teacher', 'lastSync', 'Failed: Allowed IP Addresses has not been set in Manage Settings.');
 			print "Allowed IP Addresses has not been set in Manage Settings.";
 			http_response_code(400);
 			exit;
@@ -60,7 +62,7 @@ include './modConfig.php';
 
 				if($canContinue == false)
 				{
-                    $settingGateway->updateSettingByScope('Meet The Teacher', 'lastSync', 'Failed: IP address not allowed');
+                    $settingGateway->updateSettingByScope('Meet The Teacher', 'lastSync', 'Failed: IP address not allowed '.$realIP);
 					print "Your IP address is not in the allow list.";
 					http_response_code(403);
 					exit;

@@ -1,5 +1,9 @@
 CHANGELOG
 =========
+1.2.06
+------
+Added additional debugging to sync process
+
 1.2.05
 ------
 Fixed links using form groups with special characters
