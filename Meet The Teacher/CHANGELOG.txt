@@ -1,5 +1,10 @@
 CHANGELOG
 =========
+1.2.07
+------
+Increased API script resources to prevent timeout
+Fixed API endpoint sending unnecessary Form Group data
+
 1.2.06
 ------
 Added additional debugging to sync process

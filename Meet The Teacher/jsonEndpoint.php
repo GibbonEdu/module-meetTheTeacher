@@ -22,6 +22,11 @@ use Gibbon\Domain\System\SettingGateway;
 
 include './modConfig.php';
 
+// Override the ini to keep this process alive
+ini_set('memory_limit', '2048M');
+ini_set('max_execution_time', 1800);
+set_time_limit(1800);
+
     $canContinue = false;
     $settingGateway = $container->get(SettingGateway::class);
 

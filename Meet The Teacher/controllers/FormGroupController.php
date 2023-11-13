@@ -28,12 +28,13 @@ class FormGroupController implements PESAPIController
 				rg.name as 'RollGroupName',
 				rg.nameShort as 'RollGroupShortName',
 				rg.gibbonPersonIDTutor as 'TeacherID1',
-				rg.gibbonPersonIDTutor2 as 'TeacherID2',
-				rg.gibbonPersonIDTutor3 as 'TeacherID3'
+				(CASE WHEN rg.gibbonPersonIDTutor2<>rg.gibbonPersonIDTutor THEN rg.gibbonPersonIDTutor2 ELSE null END) as 'TeacherID2',
+				(CASE WHEN rg.gibbonPersonIDTutor3<>rg.gibbonPersonIDTutor THEN rg.gibbonPersonIDTutor3 ELSE null END) as 'TeacherID3'
 			from 
 				gibbonPerson s
 			inner join gibbonStudentEnrolment se on se.gibbonPersonID = s.gibbonPersonID
 			inner join gibbonFormGroup rg on rg.gibbonFormGroupID = se.gibbonFormGroupID
+            where rg.gibbonSchoolYearID=(select gibbonSchoolYearID from gibbonSchoolYear where status='Current')
 		;",
 
 		"GetByID" => "
@@ -43,14 +44,15 @@ class FormGroupController implements PESAPIController
 				rg.name as 'RollGroupName',
 				rg.nameShort as 'RollGroupShortName',
 				rg.gibbonPersonIDTutor as 'TeacherID1',
-				rg.gibbonPersonIDTutor2 as 'TeacherID2',
-				rg.gibbonPersonIDTutor3 as 'TeacherID3'
+				(CASE WHEN rg.gibbonPersonIDTutor2<>rg.gibbonPersonIDTutor THEN rg.gibbonPersonIDTutor2 ELSE null END) as 'TeacherID2',
+				(CASE WHEN rg.gibbonPersonIDTutor3<>rg.gibbonPersonIDTutor THEN rg.gibbonPersonIDTutor3 ELSE null END) as 'TeacherID3'
 			from 
 				gibbonPerson s
 			inner join gibbonStudentEnrolment se on se.gibbonPersonID = s.gibbonPersonID
 			inner join gibbonFormGroup rg on rg.gibbonFormGroupID = se.gibbonFormGroupID
 			where
 				s.gibbonPersonID = :ID
+                and rg.gibbonSchoolYearID=(select gibbonSchoolYearID from gibbonSchoolYear where status='Current')
 		;"
 	);
 
