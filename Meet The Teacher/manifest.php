@@ -1,7 +1,9 @@
 <?php
 /*
-Gibbon, Flexible & Open School System
-Copyright (C) 2010, Ross Parker
+Gibbon: the flexible, open school platform
+Founded by Ross Parker at ICHK Secondary. Built by Ross Parker, Sandra Kuipers and the Gibbon community (https://gibbonedu.org/about/)
+Copyright © 2010, Gibbon Foundation
+Gibbon™, Gibbon Education Ltd. (Hong Kong)
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -25,8 +27,8 @@ $description = 'Provides an API for data syncing, and and interface for acess, t
 $entryURL = 'meetTheTeacher_view.php';
 $type = 'Additional';
 $category = 'Other';
-$version = '1.2.07';
-$author = 'Jim Speir, Sandra Kuipers & Ross Parker';
+$version = '1.3.00';
+$author = 'Jim Speir & Gibbon Foundation';
 $url = 'http://gibbonedu.org';
 
 //Module tables
