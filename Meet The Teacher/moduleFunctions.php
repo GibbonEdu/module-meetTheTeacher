@@ -94,7 +94,7 @@ function getMeetTheTeacher($connection2, $guid, $gibbonPersonIDChild = null)
             $params['DateOfBirthHelper_Month'] = $dob->format('n');
             $params['DateOfBirthHelper_Year'] = $dob->format('Y');
         } else {
-            $params['StudentClass'] =  urlencode($student['formGroupName']);
+            $params['StudentClass'] =  $student['formGroupName'];
         }
 
         $output .= '<br/>';

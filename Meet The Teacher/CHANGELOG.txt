@@ -1,5 +1,10 @@
 CHANGELOG
 =========
+v1.4.00
+-------
+Added a system for importing bookings from MTT to help generate spreadsheets for teachers
+Gibbon v28 Compatibility
+
 v1.3.02
 -------
 Fixed JS bug introduced in ownership transfer

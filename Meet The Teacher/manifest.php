@@ -27,13 +27,30 @@ $description = 'Provides an API for data syncing, and and interface for acess, t
 $entryURL = 'meetTheTeacher_view.php';
 $type = 'Additional';
 $category = 'Other';
-$version = '1.3.02';
+$version = '1.4.00';
 $author = 'Jim Speir & Gibbon Foundation';
 $url = 'http://gibbonedu.org';
 
 //Module tables
 $moduleTables[0] = "CREATE TABLE `meetTheTeacherLogin` (`meetTheTeacherLoginID` int(10) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, `gibbonPersonID` int(10) UNSIGNED ZEROFILL NOT NULL,`loginCode` varchar(9) COLLATE utf8_unicode_ci NOT NULL,PRIMARY KEY (`meetTheTeacherLoginID`)) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
 $moduleTables[1] = "CREATE TABLE `meetTheTeacherCustomGroups` (`ID` int(11) NOT NULL AUTO_INCREMENT, `TeacherID` int(10) unsigned zerofill NOT NULL, `StudentID` int(10) unsigned zerofill NOT NULL, `GroupName` varchar(255) COLLATE utf8_unicode_ci NOT NULL, `GroupID` int(11) DEFAULT NULL, PRIMARY KEY (`ID`), KEY `TeacherID` (`TeacherID`), KEY `StudentID` (`StudentID`), KEY `GroupID` (`GroupID`)) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;";
+$moduleTables[2] = "CREATE TABLE `meetTheTeacherBooking` (
+    `meetTheTeacherBookingID` INT(12) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT,
+    gibbonSchoolYearID INT(3) UNSIGNED ZEROFILL NOT NULL,
+    consultationName VARCHAR(120) NULL,
+    appointmentID INT(10) UNSIGNED NOT NULL,
+    appointmentStart DATETIME NULL,
+    appointmentEnd DATETIME NULL,
+    courseName VARCHAR(120) NULL,
+    gibbonPersonIDStudent INT(10) UNSIGNED ZEROFILL NOT NULL,
+    gibbonPersonIDTeacher INT(10) UNSIGNED ZEROFILL NOT NULL,
+    gibbonPersonIDParent INT(10) UNSIGNED ZEROFILL NOT NULL,
+    timestampAdded TIMESTAMP NULL,
+    parentMessage TEXT NULL,
+    parentTranslator VARCHAR(30) NULL,
+    location VARCHAR(120) NULL,
+    PRIMARY KEY (`meetTheTeacherBookingID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;";
 
 //Action rows
 $actionRows[0]['name'] = 'View Meet The Teacher';
@@ -84,6 +101,23 @@ $actionRows[2]['categoryPermissionStaff'] = 'Y';
 $actionRows[2]['categoryPermissionStudent'] = 'N';
 $actionRows[2]['categoryPermissionParent'] = 'N';
 $actionRows[2]['categoryPermissionOther'] = 'N';
+
+$actionRows[2]['name'] = 'Export Bookings';
+$actionRows[2]['precedence'] = '0';
+$actionRows[2]['category'] = 'Consultations';
+$actionRows[2]['description'] = 'Allows a user to export their own Meet The Teacher bookings.';
+$actionRows[2]['URLList'] = 'export.php';
+$actionRows[2]['entryURL'] = 'export.php';
+$actionRows[2]['defaultPermissionAdmin'] = 'Y';
+$actionRows[2]['defaultPermissionTeacher'] = 'Y';
+$actionRows[2]['defaultPermissionStudent'] = 'N';
+$actionRows[2]['defaultPermissionParent'] = 'N';
+$actionRows[2]['defaultPermissionSupport'] = 'N';
+$actionRows[2]['categoryPermissionStaff'] = 'Y';
+$actionRows[2]['categoryPermissionStudent'] = 'N';
+$actionRows[2]['categoryPermissionParent'] = 'N';
+$actionRows[2]['categoryPermissionOther'] = 'N';
+
 
 //Settings
 $gibbonSetting[] = "INSERT INTO `gibbonSetting` (`gibbonSettingID` ,`scope` ,`name` ,`nameDisplay` ,`description` ,`value`) VALUES (NULL , 'Meet The Teacher', 'yearGroups', 'Year Groups', 'List of year group short names to match against, as a comma-separated list.', 'Y07,Y08,Y09,Y10,Y11,Y12,Y13');";

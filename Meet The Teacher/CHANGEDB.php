@@ -159,8 +159,7 @@ $sql[$count][1] = "";
 ++$count;
 $sql[$count][0] = '1.3.00';
 $sql[$count][1] = "
-UPDATE gibbonModule SET author='Jim Speir & Gibbon Foundation', url='https://gibbonedu.org' WHERE name='Meet The Teacher';end
-";
+UPDATE gibbonModule SET author='Jim Speir & Gibbon Foundation', url='https://gibbonedu.org' WHERE name='Meet The Teacher';end";
 
 //v1.3.01
 ++$count;
@@ -171,3 +170,13 @@ $sql[$count][1] = "";
 ++$count;
 $sql[$count][0] = '1.3.02';
 $sql[$count][1] = "";
+
+//v1.4.00
+++$count;
+$sql[$count][0] = '1.4.00';
+$sql[$count][1] = "";
+$sql[$count][1] = "CREATE TABLE `meetTheTeacherBooking` (`meetTheTeacherBookingID` INT(12) UNSIGNED ZEROFILL NOT NULL AUTO_INCREMENT, gibbonSchoolYearID INT(3) UNSIGNED ZEROFILL NOT NULL, consultationName VARCHAR(120) NULL, appointmentID INT(10) UNSIGNED NOT NULL, appointmentStart DATETIME NULL, appointmentEnd DATETIME NULL, courseName VARCHAR(120) NULL, gibbonPersonIDStudent INT(10) UNSIGNED ZEROFILL NOT NULL, gibbonPersonIDTeacher INT(10) UNSIGNED ZEROFILL NOT NULL, gibbonPersonIDParent INT(10) UNSIGNED ZEROFILL NOT NULL, timestampAdded TIMESTAMP NULL, parentMessage TEXT NULL, parentTranslator VARCHAR(30) NULL, location VARCHAR(120) NULL, PRIMARY KEY (`meetTheTeacherBookingID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;end
+INSERT INTO `gibbonAction` (`gibbonModuleID`, `name`, `precedence`, `category`, `description`, `URLList`, `entryURL`, `defaultPermissionAdmin`, `defaultPermissionTeacher`, `defaultPermissionStudent`, `defaultPermissionParent`, `defaultPermissionSupport`, `categoryPermissionStaff`, `categoryPermissionStudent`, `categoryPermissionParent`, `categoryPermissionOther`) VALUES ((SELECT gibbonModuleID FROM gibbonModule WHERE name='Meet The Teacher'), 'Export Bookings', 0, 'Consultations', 'Allows a user to export their own Meet The Teacher bookings.', 'export.php', 'export.php', 'Y', 'Y', 'N', 'N', 'N', 'Y', 'N', 'N', 'N');end
+INSERT INTO `gibbonPermission` (`gibbonRoleID` ,`gibbonActionID`) VALUES ('001', (SELECT gibbonActionID FROM gibbonAction JOIN gibbonModule ON (gibbonAction.gibbonModuleID=gibbonModule.gibbonModuleID) WHERE gibbonModule.name='Meet The Teacher' AND gibbonAction.name='Export Bookings'));end
+INSERT INTO `gibbonPermission` (`gibbonRoleID` ,`gibbonActionID`) VALUES ('002', (SELECT gibbonActionID FROM gibbonAction JOIN gibbonModule ON (gibbonAction.gibbonModuleID=gibbonModule.gibbonModuleID) WHERE gibbonModule.name='Meet The Teacher' AND gibbonAction.name='Export Bookings'));end";
