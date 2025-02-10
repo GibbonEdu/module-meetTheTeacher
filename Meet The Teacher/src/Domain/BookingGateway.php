@@ -34,7 +34,7 @@ class BookingGateway extends QueryableGateway
     /**
      * @return DataSet
      */
-    public function selectBookingsByTeacher($gibbonPersonID)
+    public function selectBookingsByTeacher($gibbonPersonID, $consultationName = null)
     {
         $query = $this
             ->newSelect()
@@ -72,6 +72,19 @@ class BookingGateway extends QueryableGateway
             ->groupBy(['meetTheTeacherBooking.appointmentID'])
             ->orderBy(['meetTheTeacherBooking.appointmentStart', 'student.surname']);
 
+        if (!empty($consultationName)) {
+            $query->where('meetTheTeacherBooking.consultationName=:consultationName')
+                ->bindValue('consultationName', $consultationName);
+        }
+
         return $this->runSelect($query);
+    }
+
+    public function selectConsultationsBySchoolYear($gibbonSchoolYearID)
+    {
+        $data = ['gibbonSchoolYearID' => $gibbonSchoolYearID];
+        $sql = "SELECT DISTINCT consultationName as value, consultationName as name FROM meetTheTeacherBooking WHERE gibbonSchoolYearID=:gibbonSchoolYearID GROUP BY consultationName ORDER BY timestampAdded DESC";
+
+        return $this->db()->select($sql, $data);
     }
 }

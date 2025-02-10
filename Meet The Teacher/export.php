@@ -34,8 +34,14 @@ if (isActionAccessible($guid, $connection2, '/modules/Meet The Teacher/export.ph
     $form = Form::create('export', $session->get('absoluteURL').'/modules/Meet The Teacher/exportProcess.php');
     $form->setTitle(__('Export'));
 
+    $consultations = $bookingGateway->selectConsultationsBySchoolYear($session->get('gibbonSchoolYearID'))->fetchKeyPair();
+
     $row = $form->addRow();
-        $row->addContent(__('When you click Export, this tool will create a spreadsheet of your bookings, including photos and links to student profiles. This can be uploaded to Google Sheets to add your own notes and comments.'))->addClass('text-sm');
+        $row->addLabel('consultationName', __m('Consultation'));
+        $row->addSelect('consultationName')->fromArray($consultations)->required()->placeholder();
+
+    $row = $form->addRow();
+        $row->addContent(__m('When you click Export, this tool will create a spreadsheet of your bookings, including photos and links to student profiles. This can be uploaded to Google Sheets to add your own notes and comments.'))->addClass('text-sm');
 
     $row = $form->addRow();
         $row->addSubmit(__('Export'));
