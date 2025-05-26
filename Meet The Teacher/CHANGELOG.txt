@@ -1,5 +1,10 @@
 CHANGELOG
 =========
+v1.4.02
+-------
+Removed leading zeroes from form group names (causes problems on MTT side)
+Fixed syntax error in PHP comments related to Gibbon copyright changes
+
 v1.4.01
 -------
 Add an option to select the consultation when exporting bookings

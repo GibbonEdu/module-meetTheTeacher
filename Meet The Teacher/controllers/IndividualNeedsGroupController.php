@@ -41,6 +41,7 @@ class IndividualNeedsGroupController implements PESAPIController
             inner join gibbonINPersonDescriptor inpd on inpd.gibbonPersonID = ina.gibbonPersonIDStudent
             inner join gibbonINDescriptor ind on ind.gibbonINDescriptorID = inpd.gibbonINDescriptorID
             inner join gibbonPerson p on p.gibbonPersonID = ina.gibbonPersonIDAssistant
+            inner join gibbonStaff ON (gibbonStaff.gibbonPersonID=p.gibbonPersonID)
             where
                 p.status in ('Full','Expected')
 
@@ -60,6 +61,7 @@ class IndividualNeedsGroupController implements PESAPIController
             inner join gibbonINPersonDescriptor inpd on inpd.gibbonPersonID = ina.gibbonPersonIDStudent
             inner join gibbonINDescriptor ind on ind.gibbonINDescriptorID = inpd.gibbonINDescriptorID
             inner join gibbonPerson p on p.gibbonPersonID = ina.gibbonPersonIDAssistant
+            inner join gibbonStaff ON (gibbonStaff.gibbonPersonID=p.gibbonPersonID)
             where
                 p.status in ('Full','Expected')
                 and FIND_IN_SET(:lsrole, p.gibbonRoleIDAll)
@@ -79,6 +81,7 @@ class IndividualNeedsGroupController implements PESAPIController
             inner join gibbonINPersonDescriptor inpd on inpd.gibbonPersonID = ina.gibbonPersonIDStudent
             inner join gibbonINDescriptor ind on ind.gibbonINDescriptorID = inpd.gibbonINDescriptorID
             inner join gibbonPerson p on p.gibbonPersonID = ina.gibbonPersonIDAssistant
+            inner join gibbonStaff ON (gibbonStaff.gibbonPersonID=p.gibbonPersonID)
             where
                 p.status in ('Full','Expected')
                 and ina.gibbonINAssistantID = :ID

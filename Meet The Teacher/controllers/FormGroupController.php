@@ -1,6 +1,6 @@
 <?php
 
-Gibbon: the flexible, open school platform
+/* Gibbon: the flexible, open school platform
 Founded by Ross Parker at ICHK Secondary. Built by Ross Parker, Sandra Kuipers and the Gibbon community (https://gibbonedu.org/about/)
 Copyright © 2010, Gibbon Foundation
 Gibbon™, Gibbon Education Ltd. (Hong Kong)
@@ -26,8 +26,8 @@ class FormGroupController implements PESAPIController
 			select
 				s.gibbonPersonID as 'StudentID',
 				se.gibbonFormGroupID as 'RollGroupID',
-				rg.name as 'RollGroupName',
-				rg.nameShort as 'RollGroupShortName',
+				TRIM(LEADING '0' FROM rg.name) as 'RollGroupName',
+				TRIM(LEADING '0' FROM rg.nameShort) as 'RollGroupShortName',
 				rg.gibbonPersonIDTutor as 'TeacherID1',
 				(CASE WHEN rg.gibbonPersonIDTutor2<>rg.gibbonPersonIDTutor THEN rg.gibbonPersonIDTutor2 ELSE null END) as 'TeacherID2',
 				(CASE WHEN rg.gibbonPersonIDTutor3<>rg.gibbonPersonIDTutor THEN rg.gibbonPersonIDTutor3 ELSE null END) as 'TeacherID3'
@@ -42,8 +42,8 @@ class FormGroupController implements PESAPIController
 			select
 				s.gibbonPersonID as 'StudentID',
 				se.gibbonFormGroupID as 'RollGroupID',
-				rg.name as 'RollGroupName',
-				rg.nameShort as 'RollGroupShortName',
+				TRIM(LEADING '0' FROM rg.name) as 'RollGroupName',
+				TRIM(LEADING '0' FROM rg.nameShort) as 'RollGroupShortName',
 				rg.gibbonPersonIDTutor as 'TeacherID1',
 				(CASE WHEN rg.gibbonPersonIDTutor2<>rg.gibbonPersonIDTutor THEN rg.gibbonPersonIDTutor2 ELSE null END) as 'TeacherID2',
 				(CASE WHEN rg.gibbonPersonIDTutor3<>rg.gibbonPersonIDTutor THEN rg.gibbonPersonIDTutor3 ELSE null END) as 'TeacherID3'

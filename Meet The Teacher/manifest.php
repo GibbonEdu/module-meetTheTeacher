@@ -27,7 +27,7 @@ $description = 'Provides an API for data syncing, and and interface for acess, t
 $entryURL = 'meetTheTeacher_view.php';
 $type = 'Additional';
 $category = 'Other';
-$version = '1.4.01';
+$version = '1.4.02';
 $author = 'Jim Speir & Gibbon Foundation';
 $url = 'http://gibbonedu.org';
 

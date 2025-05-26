@@ -27,8 +27,6 @@ use Gibbon\Module\MeetTheTeacher\Domain\BookingGateway;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use Gibbon\Services\Format;
 
-$_POST['address'] = '/modules/Meet The Teacher/export.php';
-
 include '../../gibbon.php';
 
 $URL = $session->get('absoluteURL').'/index.php?q=/modules/Meet The Teacher/export.php';
