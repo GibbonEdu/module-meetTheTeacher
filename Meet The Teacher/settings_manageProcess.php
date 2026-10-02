@@ -19,135 +19,63 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+use Gibbon\Data\Validator;
+use Gibbon\Domain\System\SettingGateway;
+
 include '../../gibbon.php';
 
-$URL = $session->get('absoluteURL').'/index.php?q=/modules/'.getModuleName($_POST['address']).'/settings_manage.php';
+$_POST = $container->get(Validator::class)->sanitize($_POST, ['text' => 'HTML']);
+
+$URL = $session->get('absoluteURL').'/index.php?q=/modules/Meet The Teacher/settings_manage.php';
 
 if (isActionAccessible($guid, $connection2, '/modules/Meet The Teacher/settings_manage.php') == false) {
     $URL .= '&return=error0';
     header("Location: {$URL}");
 } else {
     //Proceed!
-    $apiKey = $_POST['apiKey'] ?? '';
-    $allowedIPs = $_POST['allowedIPs'] ?? '';
-    $lsTeacherRole = $_POST['lsTeacherRole'] ?? '';
-    $lsIgnoreClasses = 0;
-    if(isset($_POST['lsIgnoreClasses']))
-    {
-      $lsIgnoreClasses = $_POST['lsIgnoreClasses'] ? 1 : 0;
-    }
-    $modVer = $_POST['apiVersion'] ?? '';
-    $url = $_POST['url'] ?? '';
-    $text = $_POST['text'] ?? '';
-    $textUnavailable = $_POST['textUnavailable'] ?? '';
-    $yearGroups = $_POST['yearGroups'] ?? '';
-    $authenticateBy = $_POST['authenticateBy'] ?? '';
+    $partialFail = false;
+    $settingGateway = $container->get(SettingGateway::class);
 
-    //Validate Inputs
-    if ($apiKey == '' or $allowedIPs == '' or $url == '' or $text == '' or $yearGroups == '') {
-        $URL .= '&return=error3';
-        header("Location: {$URL}");
-    } else {
-        //Write to database
-        $fail = false;
+    $settingsToUpdate = [
+        'Meet The Teacher' => [
+            'apiActive'       => 'required',
+            'apiKey'          => 'required',
+            'allowedIPs'      => 'required',
+            'lsTeacherRole'   => '',
+            'lsIgnoreClasses' => '',
+            'apiVersion'      => '',
+            'url'             => 'required',
+            'text'            => 'required',
+        ],
+    ];
 
-        try {
-            $data = array('apiKey' => $apiKey);
-            $sql = "UPDATE gibbonSetting SET value=:apiKey WHERE scope='Meet The Teacher' AND name='apiKey'";
-            $result = $connection2->prepare($sql);
-            $result->execute($data);
-        } catch (PDOException $e) {
-            $fail = true;
-        }
-
-        try {
-            $data = array('allowedIPs' => $allowedIPs);
-            $sql = "UPDATE gibbonSetting SET value=:allowedIPs WHERE scope='Meet The Teacher' AND name='allowedIPs'";
-            $result = $connection2->prepare($sql);
-            $result->execute($data);
-        } catch (PDOException $e) {
-            $fail = true;
-        }
-
-        try {
-            $data = array('lsTeacherRole' => $lsTeacherRole);
-            $sql = "UPDATE gibbonSetting SET value=:lsTeacherRole WHERE scope='Meet The Teacher' AND name='lsTeacherRole'";
-            $result = $connection2->prepare($sql);
-            $result->execute($data);
-        } catch (PDOException $e) {
-            $fail = true;
-        }
-
-        try {
-            $data = array('lsIgnoreClasses' => $lsIgnoreClasses);
-            $sql = "UPDATE gibbonSetting SET value=:lsIgnoreClasses WHERE scope='Meet The Teacher' AND name='lsIgnoreClasses'";
-            $result = $connection2->prepare($sql);
-            $result->execute($data);
-        } catch (PDOException $e) {
-            $fail = true;
-        }
-
-        try{
-          $data = array('version' => $modVer);
-          $sql = "UPDATE gibbonSetting set value = :version WHERE scope = 'Meet The Teacher' AND name = 'version'";
-          $result = $connection2->prepare($sql);
-          $result->execute($data);
-        } catch(PDOException $e) {
-          $fail = true;
-        }
-
-        try {
-            $data = array('value' => $url);
-            $sql = "UPDATE gibbonSetting SET value=:value WHERE scope='Meet The Teacher' AND name='url'";
-            $result = $connection2->prepare($sql);
-            $result->execute($data);
-        } catch (PDOException $e) {
-            $fail = true;
-        }
-
-        try {
-            $data = array('value' => $text);
-            $sql = "UPDATE gibbonSetting SET value=:value WHERE scope='Meet The Teacher' AND name='text'";
-            $result = $connection2->prepare($sql);
-            $result->execute($data);
-        } catch (PDOException $e) {
-            $fail = true;
-        }
-
-        try {
-            $data = array('value' => $textUnavailable);
-            $sql = "UPDATE gibbonSetting SET value=:value WHERE scope='Meet The Teacher' AND name='textUnavailable'";
-            $result = $connection2->prepare($sql);
-            $result->execute($data);
-        } catch (PDOException $e) {
-            $fail = true;
-        }
-
-        try {
-            $data = array('value' => $yearGroups);
-            $sql = "UPDATE gibbonSetting SET value=:value WHERE scope='Meet The Teacher' AND name='yearGroups'";
-            $result = $connection2->prepare($sql);
-            $result->execute($data);
-        } catch (PDOException $e) {
-            $fail = true;
-        }
-
-        try {
-            $data = array('value' => $authenticateBy);
-            $sql = "UPDATE gibbonSetting SET value=:value WHERE scope='Meet The Teacher' AND name='authenticateBy'";
-            $result = $connection2->prepare($sql);
-            $result->execute($data);
-        } catch (PDOException $e) {
-            $fail = true;
-        }
-
-        if ($fail == true) {
-            $URL .= '&return=error2';
-            header("Location: {$URL}");
-        } else {
-            getSystemSettings($guid, $connection2);
-            $URL .= '&return=success0';
-            header("Location: {$URL}");
+    // Validate required fields
+    foreach ($settingsToUpdate as $scope => $settings) {
+        foreach ($settings as $name => $property) {
+            if ($property == 'required' && empty($_POST[$name])) {
+                $URL .= '&return=error1';
+                header("Location: {$URL}");
+                exit;
+            }
         }
     }
+
+    // Update fields
+    foreach ($settingsToUpdate as $scope => $settings) {
+        foreach ($settings as $name => $property) {
+            $value = $_POST[$name] ?? '';
+
+            if ($property == 'skip-hidden' && !isset($_POST[$name])) continue;
+
+            $updated = $settingGateway->updateSettingByScope($scope, $name, $value);
+            $partialFail &= !$updated;
+        }
+    }
+
+    
+    $URL .= $partialFail
+        ? '&return=warning1'
+        : '&return=success0';
+    header("Location: {$URL}");
+    
 }

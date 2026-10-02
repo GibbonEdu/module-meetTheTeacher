@@ -29,93 +29,23 @@ function getMeetTheTeacher($connection2, $guid, $gibbonPersonIDChild = null)
     $output = '';
 
 	$settingGateway = $container->get(SettingGateway::class);
-    $url = $settingGateway->getSettingByScope('Meet The Teacher', 'url');
     $text = $settingGateway->getSettingByScope('Meet The Teacher', 'text');
-    $textUnavailable = $settingGateway->getSettingByScope('Meet The Teacher', 'textUnavailable');
-    $yearGroups = $settingGateway->getSettingByScope('Meet The Teacher', 'yearGroups');
-    $authenticateBy = $settingGateway->getSettingByScope('Meet The Teacher', 'authenticateBy');
 
-    // Get parent details to be passed to URL params
-    $data = array('gibbonPersonID' => $session->get('gibbonPersonID'));
-    $sql = "SELECT DISTINCT email AS parentEmailAddress, email AS parentEmailAddressConfirm, meetTheTeacherLogin.loginCode as parentCode
-            FROM gibbonPerson
-            LEFT JOIN meetTheTeacherLogin ON (gibbonPerson.gibbonPersonID=meetTheTeacherLogin.gibbonPersonID)
-            WHERE gibbonPerson.gibbonPersonID=:gibbonPersonID";
-    $result = $connection2->prepare($sql);
-    $result->execute($data);
+    $url = $settingGateway->getSettingByScope('Meet The Teacher', 'url');
+    $url = trim($url, '/').'/Auth/ParentUniversalLogin?prompt=login';
 
-    if ($result->rowCount() == 1) {
-        $params = $result->fetch();
-    } else {
-        $output .= "<div class='warning'>";
-        $output .= $textUnavailable;
-        $output .= '</div>';
-        return $output;
-    }
+    $output .= '<div class="message" style="padding-top: 14px">';
+    $output .= __($text).'<br/>';
 
-    // Get student details for this parent
-    $data = array(
-        'gibbonPersonID' => $session->get('gibbonPersonID'),
-        'gibbonPersonIDChild' => $gibbonPersonIDChild,
-        'date' => date('Y-m-d'),
-        'gibbonSchoolYearID' => $session->get('gibbonSchoolYearID'),
-        'yearGroups' => $yearGroups,
-    );
-    $sql = "SELECT gibbonPerson.gibbonPersonID, gibbonPerson.surname, gibbonPerson.preferredName, gibbonYearGroup.nameShort as yearGroupName, gibbonFormGroup.nameShort as formGroupName, gibbonPerson.dob
-        FROM gibbonFamilyChild
-        JOIN gibbonFamily ON (gibbonFamilyChild.gibbonFamilyID=gibbonFamily.gibbonFamilyID)
-        JOIN gibbonFamilyAdult ON (gibbonFamilyAdult.gibbonFamilyID=gibbonFamily.gibbonFamilyID)
-        JOIN gibbonPerson ON (gibbonFamilyChild.gibbonPersonID=gibbonPerson.gibbonPersonID)
-        JOIN gibbonStudentEnrolment ON (gibbonStudentEnrolment.gibbonPersonID=gibbonPerson.gibbonPersonID)
-        JOIN gibbonYearGroup ON (gibbonYearGroup.gibbonYearGroupID=gibbonStudentEnrolment.gibbonYearGroupID)
-        JOIN gibbonFormGroup ON (gibbonFormGroup.gibbonFormGroupID=gibbonStudentEnrolment.gibbonFormGroupID)
-        WHERE gibbonStudentEnrolment.gibbonSchoolYearID=:gibbonSchoolYearID
-        AND FIND_IN_SET(gibbonYearGroup.nameShort, :yearGroups)
-        AND gibbonPerson.status='Full' AND (dateEnd IS NULL OR dateEnd>=:date)
-        AND gibbonFamilyAdult.gibbonPersonID=:gibbonPersonID
-        AND gibbonFamilyAdult.childDataAccess='Y'
-        AND gibbonFamilyChild.gibbonPersonID=:gibbonPersonIDChild
-        ORDER BY gibbonYearGroup.sequenceNumber ASC";
-    $result = $connection2->prepare($sql);
-    $result->execute($data);
-
-    if ($result->rowCount() != 1) {
-        $output .= "<div class='warning'>";
-        $output .= $textUnavailable;
-        $output .= '</div>';
-    } else {
-        $output .= '<div class="message" style="padding-top: 14px">';
-        $output .= "<b>".__($text).'</b><br/>';
-
-        $student = $result->fetch();
-        if ($authenticateBy == 'dob') {
-            $dob = new DateTime($student['dob']);
-            $params['DateOfBirthHelper_Day'] = $dob->format('j');
-            $params['DateOfBirthHelper_Month'] = $dob->format('n');
-            $params['DateOfBirthHelper_Year'] = $dob->format('Y');
-        } else {
-            $params['StudentClass'] =  ltrim($student['formGroupName'], '0');
-        }
-
-        $output .= '<br/>';
-        $output .= '<div class="text-base leading-normal">';
-        $output .= '<b>'.__('Click to Login').': </b>';
-        $output .= '<a href="'.$url.'?isPostback=true&'.http_build_query($params, "", "&", PHP_QUERY_RFC3986).'" target="_blank">';
-        $output .= Format::name('', $student['preferredName'], $student['surname'], 'Student', false, true);
-        $output .= ' - '.$student['yearGroupName'];
-        $output .= '</a>';
-        $output .= '</div>';
-        $output .= '<br/>';
-
-        $output .= '<div class="text-sm leading-normal">';
-        $output .= '<b>'.__('Login Code').': </b>'.$params['parentCode'].'<br/>';
-        $output .= '<b>'.__('Form Group').': </b>'.urldecode($params['StudentClass']).'<br/><br/>';
-        $output .= '</div>';
-
-        $output .= '<p class="noMargin emphasis"><b>'.__('Note').':</b> ';
-        $output .= __m('Please do not share the bookings URL with anyone, as it contains your unique login code.').'</p>';
-        $output .= '</div><br/>';
-    }
-
+    $output .= '<div class="text-base leading-normal">';
+    $output .= '<a href="'.$url.'" target="_blank" class="">';
+    $output .= '<button type="button" class="button rounded-md px-6 py-3 text-base bg-gray-100 text-gray-800 inline-flex align-middle items-center border border-gray-400 hover:border-gray-700 gap-2 no-underline font-medium shadow-sm focus-visible:outline focus-visible:outline-offset-2 focus-visible:outline-blue-500">';
+    $output .= __('Login to Meet The Teacher');
+    $output .= icon('basic', 'arrow-move', 'text-gray-600 block size-5 lg:-ml-0.5 lg:mr-1.5');
+    $output .= '</button>';
+    $output .= '</a>';
+    $output .= '</div>';
+    $output .= '<br/>';
+    
     return $output;
 }

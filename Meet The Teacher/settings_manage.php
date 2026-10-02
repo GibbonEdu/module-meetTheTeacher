@@ -20,15 +20,14 @@ along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
 use Gibbon\Forms\Form;
+use Gibbon\Services\Format;
 use Gibbon\Domain\System\SettingGateway;
 
 $settingGateway = $container->get(SettingGateway::class);
 
 if (isActionAccessible($guid, $connection2, '/modules/Meet The Teacher/settings_manage.php') == false) {
     //Acess denied
-    echo "<div class='error'>";
-    echo __('You do not have access to this action.');
-    echo '</div>';
+    echo Format::alert(__('You do not have access to this action.'), 'error');
 } else {
     //Proceed!
     $page->breadcrumbs->add(__('Manage Settings'));
@@ -41,6 +40,11 @@ if (isActionAccessible($guid, $connection2, '/modules/Meet The Teacher/settings_
     $form->addHiddenValue('apiVersion', $setting['value']);
 
     $row = $form->addRow()->addHeading(__('API Settings'));
+
+    $setting = $settingGateway->getSettingByScope('Meet The Teacher', 'apiActive',true);
+    $row = $form->addRow();
+        $row->addLabel($setting['name'],__($setting['nameDisplay']))->description(__($setting['description']));
+        $row->addYesNo($setting['name'])->selected($setting['value']);
 
     $setting = $settingGateway->getSettingByScope('Meet The Teacher', 'lastSync', true);
     $row = $form->addRow();
@@ -80,24 +84,6 @@ if (isActionAccessible($guid, $connection2, '/modules/Meet The Teacher/settings_
     $col = $form->addRow()->addColumn();
         $col->addLabel($setting['name'], __($setting['nameDisplay']))->description(__($setting['description']));
         $col->addEditor($setting['name'], $guid)->setValue($setting['value'])->setRows(8);
-
-    $setting = $settingGateway->getSettingByScope('Meet The Teacher', 'textUnavailable', true);
-    $col = $form->addRow()->addColumn();
-        $col->addLabel($setting['name'], __($setting['nameDisplay']))->description(__($setting['description']));
-        $col->addEditor($setting['name'], $guid)->setValue($setting['value'])->setRows(8);
-
-    $row = $form->addRow()->addHeading(__('Parent Login Access'));
-
-    $setting = $settingGateway->getSettingByScope('Meet The Teacher', 'yearGroups', true);
-    $row = $form->addRow();
-        $row->addLabel($setting['name'], __($setting['nameDisplay']))->description($setting['description']);
-        $row->addTextarea($setting['name'])->setValue($setting['value']);
-
-    $authentication = array('formGroup' => 'Child Class', 'dob' => 'Child Date of Birth');
-    $setting = $settingGateway->getSettingByScope('Meet The Teacher', 'authenticateBy', true);
-    $row = $form->addRow();
-        $row->addLabel($setting['name'], __($setting['nameDisplay']))->description($setting['description']);
-        $row->addSelect($setting['name'])->fromArray($authentication)->selected($setting['value']);
 
     $row = $form->addRow();
         $row->addFooter();

@@ -21,10 +21,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 use Gibbon\Domain\System\SettingGateway;
 
-//Load Gibbon includes
-include '../../config.php';
-include '../../gibbon.php';
-
 //Get system settings
 getSystemSettings($guid, $connection2);
 

@@ -106,7 +106,7 @@ if (isActionAccessible($guid, $connection2, '/modules/Meet The Teacher/export.ph
     $bookingGateway = $container->get(BookingGateway::class);
     $consultationName = $_POST['consultationName'] ?? '';
 
-    $bookings = $bookingGateway->selectBookingsByTeacher($session->get('gibbonPersonID'), $consultationName)->fetchAll();
+    $bookings = $bookingGateway->selectBookingsByTeacher($session->get('gibbonPersonID'), $consultationName, $session->get('gibbonSchoolYearID'))->fetchAll();
     $bookingInfo = current($bookings);
 
     // Generate some rows

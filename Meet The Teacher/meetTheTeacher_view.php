@@ -19,14 +19,14 @@ You should have received a copy of the GNU General Public License
 along with this program. If not, see <http://www.gnu.org/licenses/>.
 */
 
+use Gibbon\Services\Format;
+
 //Module includes
 include './modules/'.$session->get('module').'/moduleFunctions.php';
 
 if (isActionAccessible($guid, $connection2, '/modules/Meet The Teacher/meetTheTeacher_view.php') == false) {
     //Acess denied
-    echo "<div class='error'>";
-    echo __('You do not have access to this action.');
-    echo '</div>';
+    echo Format::alert(__('You do not have access to this action.'), 'error');
 } else {
     //Proceed!
     $page->breadcrumbs->add(__('View Meet The Teacher'));

@@ -19,6 +19,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+use Gibbon\Services\Format;
+
 $returnInt = null;
 
 //Only include module include if it is not already included (which it may be been on the index page)
@@ -26,9 +28,7 @@ include_once './modules/Meet The Teacher/moduleFunctions.php';
 
 if (isActionAccessible($guid, $connection2, '/modules/Meet The Teacher/meetTheTeacher_view.php') == false) {
     //Acess denied
-    $returnInt .= "<div class='error'>";
-    $returnInt .= 'You do not have access to this action.';
-    $returnInt .= '</div>';
+    $returnInt .= Format::alert('You do not have access to this action.', 'error');
 } else {
     $returnInt .= getMeetTheTeacher($connection2, $guid, $gibbonPersonID);
 }

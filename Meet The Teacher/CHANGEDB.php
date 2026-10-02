@@ -185,7 +185,14 @@ INSERT INTO `gibbonPermission` (`gibbonRoleID` ,`gibbonActionID`) VALUES ('002',
 $sql[$count][0] = '1.4.01';
 $sql[$count][1] = "";
 
-//v1.4.02
+//v1.5.00
 ++$count;
-$sql[$count][0] = '1.4.02';
-$sql[$count][1] = "";
+$sql[$count][0] = '1.5.00';
+$sql[$count][1] = "DELETE FROM `gibbonSetting` WHERE name='authenticateBy' AND scope='Meet The Teacher';end
+INSERT INTO `gibbonSetting` (`scope` ,`name` ,`nameDisplay` ,`description` ,`value`) VALUES ('Meet The Teacher', 'apiActive', 'API Active', 'Manually toggle whether the Meet The Teacher API is active or not. If inactive, the API will return an error message.', 'Y');end
+DELETE FROM `gibbonPermission` WHERE gibbonActionID=(SELECT gibbonActionID FROM `gibbonAction` WHERE name='Manage Login Codes' AND gibbonModuleID=(SELECT gibbonModuleID FROM gibbonModule WHERE name='Meet The Teacher'));end
+DELETE FROM `gibbonAction` WHERE name='Manage Login Codes' AND gibbonModuleID=(SELECT gibbonModuleID FROM gibbonModule WHERE name='Meet The Teacher');end
+DROP TABLE `meetTheTeacherLogin`;end
+DELETE FROM `gibbonSetting` WHERE name='textUnavailable' AND scope='Meet The Teacher';end
+DELETE FROM `gibbonSetting` WHERE name='yearGroups' AND scope='Meet The Teacher';end
+";

@@ -1,5 +1,12 @@
 CHANGELOG
 =========
+v1.5.00
+-------
+Removed parent login codes - no longer supported by MTT (Universal Login System)
+Changed the parent dashboard tab to a button to the parent MTT login page
+Added a toggle to manually turn the API endpoint off
+Added logging of all access to the API endpoint
+
 v1.4.02
 -------
 Removed leading zeroes from form group names (causes problems on MTT side)

@@ -34,7 +34,7 @@ class BookingGateway extends QueryableGateway
     /**
      * @return DataSet
      */
-    public function selectBookingsByTeacher($gibbonPersonID, $consultationName = null)
+    public function selectBookingsByTeacher($gibbonPersonID, $consultationName = null, $gibbonSchoolYearID = null)
     {
         $query = $this
             ->newSelect()
@@ -75,6 +75,10 @@ class BookingGateway extends QueryableGateway
         if (!empty($consultationName)) {
             $query->where('meetTheTeacherBooking.consultationName=:consultationName')
                 ->bindValue('consultationName', $consultationName);
+        }
+        if (!empty($gibbonSchoolYearID)) {
+            $query->where('meetTheTeacherBooking.gibbonSchoolYearID=:gibbonSchoolYearID')
+                ->bindValue('gibbonSchoolYearID', $gibbonSchoolYearID);
         }
 
         return $this->runSelect($query);

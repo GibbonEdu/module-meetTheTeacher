@@ -20,9 +20,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 use Gibbon\Services\Format;
+use Gibbon\Domain\System\LogGateway;
 use Gibbon\Domain\System\SettingGateway;
 
-include './modConfig.php';
+require_once __DIR__.'/../../gibbon.php';
+require_once __DIR__.'/modConfig.php';
 
 // Override the ini to keep this process alive
 ini_set('memory_limit', '2048M');
@@ -31,10 +33,28 @@ set_time_limit(1800);
 
     $canContinue = false;
     $settingGateway = $container->get(SettingGateway::class);
+    $logGateway = $container->get(LogGateway::class);
+
+    $apiActive = $settingGateway->getSettingByScope('Meet The Teacher', 'apiActive');
+    $realIP = getIPAddress();
+
+    // Log all access to API, even failed attempts
+    $logAPIAccess = function ($message) use ($logGateway, $session, $realIP) {
+        $logGateway->addLog($session->get('gibbonSchoolYearID'), 'Meet The Teacher', $session->get('gibbonPersonID'), 'API Access', ['message' => $message], $realIP);
+    };
+
+    if ($apiActive !== 'Y') {
+		print "API access is disabled.";
+        $logAPIAccess('API access is disabled.');
+        $settingGateway->updateSettingByScope('Meet The Teacher', 'lastSync', 'Failed: API access is disabled.'); 
+		http_response_code(400);
+		exit;
+	}
 
 	$apiKeyProvided = null;
 	if (empty($APIKey)) {
 		print "API Key has not been set in Manage Settings.";
+        $logAPIAccess('API Key has not been set in Manage Settings.');
         $settingGateway->updateSettingByScope('Meet The Teacher', 'lastSync', 'Failed: API Key has not been set in Manage Settings.');
 		http_response_code(400);
 		exit;
@@ -42,6 +62,7 @@ set_time_limit(1800);
 	else {
 		if (empty($ALLOWED_IPS)) {
             $settingGateway->updateSettingByScope('Meet The Teacher', 'lastSync', 'Failed: Allowed IP Addresses has not been set in Manage Settings.');
+            $logAPIAccess('Allowed IP Addresses has not been set in Manage Settings.');
 			print "Allowed IP Addresses has not been set in Manage Settings.";
 			http_response_code(400);
 			exit;
@@ -50,14 +71,13 @@ set_time_limit(1800);
 			$apiKeyProvided = null;
 			if (empty($_POST['apiKey'])) {
                 $settingGateway->updateSettingByScope('Meet The Teacher', 'lastSync', 'Failed: API key not provided');
+                $logAPIAccess('API key not provided.');
 				print "An API key has not been provided";
 				http_response_code(400);
 				exit;
 			}
 			else {
 				$apiKeyProvided = $_POST['apiKey'];
-
-				$realIP = getIPAddress();
 				foreach($ALLOWED_IPS as $ip)
 				{
 					$ip = trim($ip);
@@ -70,6 +90,7 @@ set_time_limit(1800);
 				if($canContinue == false)
 				{
                     $settingGateway->updateSettingByScope('Meet The Teacher', 'lastSync', 'Failed: IP address not allowed '.$realIP);
+                    $logAPIAccess('IP address not allowed: '.$realIP);
 					print "Your IP address is not in the allow list.";
 					http_response_code(403);
 					exit;
@@ -94,9 +115,9 @@ set_time_limit(1800);
 					try
 					{
 						$response['Info'] = array(
-						"APIVersion" => $settingGateway->getSettingByScope('Meet The Teacher', 'version',true)['value'],
-						"IgnoreClasses" => $settingGateway->getSettingByScope('Meet The Teacher', 'lsIgnoreClasses',true)['value'],
-						"LSRole" => $settingGateway->getSettingByScope('Meet The Teacher', 'lsTeacherRole', true)['value'],
+						"APIVersion" => $settingGateway->getSettingByScope('Meet The Teacher', 'version'),
+						"IgnoreClasses" => $settingGateway->getSettingByScope('Meet The Teacher', 'lsIgnoreClasses'),
+						"LSRole" => $settingGateway->getSettingByScope('Meet The Teacher', 'lsTeacherRole'),
 						"GibbonVersion" => $version
 						);
 						foreach($controllers as $controllerNode => $controller)
@@ -104,38 +125,42 @@ set_time_limit(1800);
 							$response[$controllerNode] = $controller->GetAll();
 						}
 
-            if(version_compare($version, "15.0.00", '>='))
-            {
-                $INController = new IndividualNeedsGroupController($connection2); //Implemented in version 15.0.00
-                $lsrole = $settingGateway->getSettingByScope('Meet The Teacher', 'lsTeacherRole', true)['value'];
-                $ignoreClassAllocations = $settingGateway->getSettingByScope('Meet The Teacher', 'lsIgnoreClasses',true)['value'];
-                if($lsrole == "")
-                {
-                    //Just get everything
-                    $response["IndividualNeedsGroups"] = $INController->GetAll();
-                }
-                else
-                {
-                    if($ignoreClassAllocations == "1")
-                    {
-                        $response["IndividualNeedsGroups"] = $INController->ClasslessGetByRole($lsrole); //Return all students with IN assigned to all teachers with the specified role
-                    }
-                    else
-                    {
-                        $response["IndividualNeedsGroups"] = $INController->GetByRole($lsrole); //Return all IN allocations with set assistants filtered by role
-                    }
-                }
-            }
+                        if(version_compare($version, "15.0.00", '>='))
+                        {
+                            $INController = new IndividualNeedsGroupController($connection2); //Implemented in version 15.0.00
+                            $lsrole = $settingGateway->getSettingByScope('Meet The Teacher', 'lsTeacherRole');
+                            $ignoreClassAllocations = $settingGateway->getSettingByScope('Meet The Teacher', 'lsIgnoreClasses');
+                            if($lsrole == "")
+                            {
+                                //Just get everything
+                                $response["IndividualNeedsGroups"] = $INController->GetAll();
+                            }
+                            else
+                            {
+                                if($ignoreClassAllocations == "1")
+                                {
+                                    $response["IndividualNeedsGroups"] = $INController->ClasslessGetByRole($lsrole); //Return all students with IN assigned to all teachers with the specified role
+                                }
+                                else
+                                {
+                                    $response["IndividualNeedsGroups"] = $INController->GetByRole($lsrole); //Return all IN allocations with set assistants filtered by role
+                                }
+                            }
+                        }
 
-            $settingGateway->updateSettingByScope('Meet The Teacher', 'lastSync', 'Successful: '.Format::dateTime(date('Y-m-d H:i:s')));
+                        $settingGateway->updateSettingByScope('Meet The Teacher', 'lastSync', 'Successful: '.Format::dateTime(date('Y-m-d H:i:s')));
 
 					}
 					catch(Exception $e)
 					{
                         $settingGateway->updateSettingByScope('Meet The Teacher', 'lastSync', 'Failed: '.$e->getMessage());
+                        $logAPIAccess('API request failed: '.$e->getMessage());
 						print "error";
 						var_dump($e);
+                        exit;
 					}
+
+                    $logAPIAccess('API request successful.');
 					header("Content-Type: text/json");
 					print json_encode($response);
 				}
