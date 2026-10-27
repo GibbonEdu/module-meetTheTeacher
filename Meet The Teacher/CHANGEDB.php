@@ -196,3 +196,8 @@ DROP TABLE `meetTheTeacherLogin`;end
 DELETE FROM `gibbonSetting` WHERE name='textUnavailable' AND scope='Meet The Teacher';end
 DELETE FROM `gibbonSetting` WHERE name='yearGroups' AND scope='Meet The Teacher';end
 ";
+
+//v1.6.00
+++$count;
+$sql[$count][0] = '1.6.00';
+$sql[$count][1] = "";

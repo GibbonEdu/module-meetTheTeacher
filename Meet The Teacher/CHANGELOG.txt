@@ -1,5 +1,9 @@
 CHANGELOG
 =========
+v1.6.00
+-------
+Updated to use the latest method to resolve file path
+
 v1.5.00
 -------
 Removed parent login codes - no longer supported by MTT (Universal Login System)

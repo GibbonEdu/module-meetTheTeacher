@@ -26,6 +26,7 @@ use PhpOffice\PhpSpreadsheet\Style\Alignment;
 use Gibbon\Module\MeetTheTeacher\Domain\BookingGateway;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use Gibbon\Services\Format;
+use Gibbon\Contracts\Filesystem\FileHandler;
 
 include '../../gibbon.php';
 
@@ -147,8 +148,8 @@ if (isActionAccessible($guid, $connection2, '/modules/Meet The Teacher/export.ph
         $cellCount = 0;
         $sheet->getRowDimension($rowCount)->setRowHeight(105);
 
-        $photoPath = $session->get('absolutePath').'/'.$booking['image_240'];
-        if (!file_exists($photoPath)) {
+        $photoPath = $container->get(FileHandler::class)->resolveStoredPath((string) $session->get('absolutePath'), (string) ($booking['image_240'] ?? ''));
+        if ($photoPath === null) {
             $photoPath = $session->get('absolutePath').'/themes/Default/img/anonymous_75.jpg';
         }
 
